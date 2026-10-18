@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Focus Hours",
+  "version": "2.0.0",
+  "description": "Scheduled YouTube blocking, daily time budget, distraction-free mode and optional strict settings lock.",
+  "permissions": ["storage", "alarms", "tabs"],
+  "host_permissions": ["*://youtube.com/*", "*://*.youtube.com/*", "*://youtu.be/*"],
+  "background": {"scripts": ["background.js"]},
+  "action": {"default_popup": "popup.html"},
+  "content_scripts": [{"matches": ["*://youtube.com/*", "*://*.youtube.com/*", "*://youtu.be/*"], "js": ["guard.js"], "run_at": "document_start"}],
+  "browser_specific_settings": {"gecko": {"id": "youtube-focus-hours@example.org"}}
+}

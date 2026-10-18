@@ -50,7 +50,9 @@
       move(112,164,187,174,3.4,'#7beabb')+
       show(label(258,220,'Grant only required permissions','#c9eafa',12),4.5)+
       move(319,174,379,143,5.35,'#80f1c7')+
-      show(padlock(430,126),6.5)+win('✓ LEAST PRIVILEGE ENFORCED'),
+      // Keep the lock above the DATA card (x=382..490, y=97..169),
+      // rather than over its title and sensitive-data description.
+      show(padlock(461,65),6.5)+win('✓ LEAST PRIVILEGE ENFORCED'),
     patch: () => person(68,150,'#419ec7','ENGINEER')+
       hide(alert(258,94,'VULNERABLE'),5.4)+
       hide(card(378,84,113,92,'SERVER','version 1.0','#ff94a3'),5.65)+

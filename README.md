@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.4.0), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Development prototype (v2.4.1), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -20,6 +20,16 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 **Important:** Renaming this extension does **not** extend its permissions or blocking features to other websites. Facebook, Instagram and TikTok are future work only.
 
 **Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
+
+### 🌐 Networking quest animation (DNS / HTTPS)
+
+When the **Networking** cybersecurity quest is active, the main visual shows one learner connecting with **four people**, labelled DNS, IP, TLS and HTTPS. The links light up one after another. Once all four are connected, the illustration displays **“🎉 4 / 4 CONNECTED — NETWORK ACHIEVEMENT!”** with a brief confetti effect.
+
+- The animation plays **once** when the quest appears and then stays still, rather than looping.
+- The theme changes on the existing **30-minute quest schedule**; page refreshes do not unlock a new quest.
+- The four characters are a **friendly visual metaphor** for network endpoints, not a literal explanation of how DNS or HTTPS works.
+- If the user prefers reduced motion, all connections and the completed state are displayed without animation.
+- Other quests, the YouTube schedule, daily time limit, and Strict Mode remain unchanged.
 
 ## ✨ Features and what they do
 

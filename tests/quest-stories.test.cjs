@@ -63,6 +63,25 @@ test("phishing and patching have clear before-and-after outcomes", () => {
   assert.match(engine.create("patch").innerHTML, /version 1.1/);
 });
 
+test("Least Privilege lock does not cover DATA card text", () => {
+  const engine = createStoryEngine();
+  const svg = engine.create("access").innerHTML;
+  // DATA card: x=382..490, y=97..169. The padlock extends roughly
+  // 17px horizontally and from -20px to +26px vertically from its anchor.
+  const dataCard = {left: 382, right: 490, top: 97, bottom: 169};
+  assert.match(svg, /DATA/);
+  assert.match(svg, /sensitive/);
+  const match = svg.match(/transform="translate\\((\\d+) (\\d+)\\)"[^>]*><path d="M-10 0v-10/);
+  assert.ok(match, "Padlock position should be identifiable in the SVG");
+  const [x, y] = match.slice(1).map(Number);
+  const padlock = {left: x-17, right: x+17, top: y-20, bottom: y+26};
+  const overlaps = padlock.left < dataCard.right &&
+    padlock.right > dataCard.left &&
+    padlock.top < dataCard.bottom &&
+    padlock.bottom > dataCard.top;
+  assert.equal(overlaps, false, "Lock must remain outside the DATA card");
+});
+
 test("the scenes are implemented locally and support reduced motion", () => {
   const engine = createStoryEngine();
   assert.match(engine.styles, /prefers-reduced-motion/);

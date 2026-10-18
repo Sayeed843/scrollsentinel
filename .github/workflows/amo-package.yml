@@ -1,0 +1,35 @@
+name: Build Mozilla Upload ZIP
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Package ScrollSentinel for AMO
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the source
+        uses: actions/checkout@v4
+      - name: Prepare clean extension ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION=$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')
+          FILE="scrollsentinel-v$VERSION-amo.zip"
+          zip -q "$FILE" manifest.json background.js quest-stories.js guard.js popup.html popup.js icons/scrollsentinel.svg LICENSE
+          test "$(unzip -Z -1 "$FILE" | head -n 1)" = "manifest.json"
+          unzip -t "$FILE"
+          echo "FILE=$FILE" >> "$GITHUB_ENV"
+      - name: Upload Mozilla submission ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: ScrollSentinel-AMO-upload-zip
+          path: ${{ env.FILE }}
+          if-no-files-found: error
+          retention-days: 30

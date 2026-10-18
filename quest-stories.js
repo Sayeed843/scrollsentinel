@@ -53,7 +53,8 @@
       show(padlock(430,126),6.5)+win('✓ LEAST PRIVILEGE ENFORCED'),
     patch: () => person(68,150,'#419ec7','ENGINEER')+
       hide(alert(258,94,'VULNERABLE'),5.4)+
-      card(378,84,113,92,'SERVER','version 1.0','#ff94a3')+
+      hide(card(378,84,113,92,'SERVER','version 1.0','#ff94a3'),5.65)+
+      show(card(378,84,113,92,'SERVER','version 1.1','#83efbe'),5.85)+
       show(label(163,81,'UPDATE READY','#badff8',13),.7)+
       move(112,132,210,132,1.55)+
       show(card(217,109,108,64,'PATCH','version 1.1','#efc976'),2.6)+
@@ -108,6 +109,8 @@
       show(label(426,173,'MITIGATED','#91f2b9',15),6.65)+
       win('✓ THREAT MODEL COMPLETE'),
     phishing: () => person(65,150,'#468bb9','YOU')+
+      person(465,55,'#9f526c','SCAMMER')+
+      move(421,85,397,89,.35,'#ff96a9')+
       hide('<rect x="162" y="50" width="233" height="150" rx="12" fill="#172e46" stroke="#ff94a9" stroke-width="2"/>'+
         label(279,79,'📩 SUSPICIOUS EMAIL','#ffb7c5',16)+
         label(279,111,'Account locked! Click now','#fff',13)+

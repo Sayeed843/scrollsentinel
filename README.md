@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.4.1), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Development prototype (v2.5.0), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -21,15 +21,34 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 
 **Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
 
-### 🌐 Networking quest animation (DNS / HTTPS)
+## 🎬 Cybersecurity Learning Stories (12 animated quests)
 
-When the **Networking** cybersecurity quest is active, the main visual shows one learner connecting with **four people**, labelled DNS, IP, TLS and HTTPS. The links light up one after another. Once all four are connected, the illustration displays **“🎉 4 / 4 CONNECTED — NETWORK ACHIEVEMENT!”** with a brief confetti effect.
+ScrollSentinel now presents a **short, illustrated cybersecurity story for every quest** while YouTube is blocked. Each story has characters or security objects, several timed steps, and a successful learning outcome.
 
-- The animation plays **once** when the quest appears and then stays still, rather than looping.
-- The theme changes on the existing **30-minute quest schedule**; page refreshes do not unlock a new quest.
-- The four characters are a **friendly visual metaphor** for network endpoints, not a literal explanation of how DNS or HTTPS works.
-- If the user prefers reduced motion, all connections and the completed state are displayed without animation.
-- Other quests, the YouTube schedule, daily time limit, and Strict Mode remain unchanged.
+| # | Quest | Animated story |
+| --- | --- | --- |
+| 1 | 🌐 DNS / HTTPS Networking | One person connects with **four others** (DNS, IP, TLS, HTTPS). Each link activates; all five celebrate **4/4 connected**. |
+| 2 | 📡 TCP / UDP | A sender delivers packets over two routes. TCP shows acknowledgment; UDP demonstrates a fast send. |
+| 3 | 🗝️ Least Privilege | An employee's admin request is denied, but a read-only request is granted. |
+| 4 | 🛠️ Patch Management | An engineer applies a security patch to an at-risk server, then the server becomes protected. |
+| 5 | 🔐 Password Hashing | A password combines with a unique salt, becomes a hash, and is stored securely. |
+| 6 | 📱 Multi-Factor Authentication | The first factor is checked, then a phone code; only after both does access succeed. |
+| 7 | 🛡️ Zero Trust | Identity and device security are verified before a protected service grants access. |
+| 8 | 🐧 Linux File Permissions | A Linux user inspects file permissions, executes `chmod 600`, and verifies the restrictive result. |
+| 9 | 🎯 Threat Modeling | An analyst identifies a vulnerable asset and incoming threat, then applies a mitigation. |
+| 10 | 🎣 Phishing Detection | A suspicious email arrives. The user checks the sender, recognizes the attempt, and reports/removes it without clicking. |
+| 11 | 🔺 CIA Triad | Confidentiality, Integrity, and Availability appear in sequence to protect an asset. |
+| 12 | 💻 Ethical Security | A researcher confirms authorization, enters a test lab, and completes a safe, scoped security exercise. |
+
+### ⏲️ Timing and distraction control
+
+- **Every 30 minutes:** The learning **quest changes** at fixed local clock slots (:00 and :30). Refreshing the page does not unlock the next quest.
+- **Every 5 minutes:** While its quest remains active on a visible blocked YouTube tab, the **same story replays** from the beginning; the educational message does not change.
+- **Story length:** Approximately 8–10 seconds; the completed scene stays still between replays.
+- **Motion accessibility:** With `prefers-reduced-motion`, scenes show their finished, informative state without animation.
+- **Performance/privacy:** The visuals use built-in SVG, CSS, and local JavaScript; no analytics, remote fonts, images, or animation service.
+
+Stories are educational analogies, **not precise simulations of networking protocols**. For instance, the four people in the DNS/HTTPS quest symbolize connected endpoints.
 
 ## ✨ Features and what they do
 
@@ -48,8 +67,8 @@ When the **Networking** cybersecurity quest is active, the main visual shows one
 | 📱 **Reduce Shorts Distractions** | Hides selected Shorts shelves and Shorts navigation links. | **Does not comprehensively block every direct Shorts URL** in this version. |
 | 🔔 **Hide YouTube Notification Button** | Hides the corresponding YouTube toolbar element. | Does not change YouTube account notifications or Firefox notification permissions. |
 | ▶️ **Autoplay Reduction** | Attempts to turn off YouTube's next-video autoplay toggle. | **Best effort**; may not work after all YouTube layout changes. |
-| 🧠 **Quest-First Cybersecurity Learning** | The learning challenge takes center stage, with a topic visualization, a clear mini task, and the YouTube access warning moved into a smaller secondary panel. | The challenge switches only at fixed **30-minute intervals** (:00/:30), with no manual skip button; reloads show the same challenge. |
-| 🌌 **Quest-Specific Cybersecurity Visual Effects** | All **12** topics have distinct animated backgrounds, labels and colors: DNS, network packets, least privilege, patching, hashing, MFA, Zero Trust, Linux, threat modeling, phishing, CIA triad and ethical testing. | Visuals are locally generated with CSS and DOM (no network calls); animations are subdued and respect reduced-motion preferences. |
+| 🧠 **Quest-First Cybersecurity Learning** | The current cybersecurity topic takes center stage with a short illustrated learning story. | New quest every 30 minutes; no manual skip button. |
+| 🌌 **Quest-Specific Animated Stories** | All 12 challenges have separate step-by-step visual stories and topic-matched backgrounds. | Each story replays every 5 minutes when its blocked tab is visible; respects reduced-motion preferences. |
 | 📐 **Responsive Blocking Screen** | Adjusts art, typography, spacing and content placement for narrow or short Firefox windows. | On extremely small windows, page scrolling remains available; respects reduced-motion preferences. |
 | 🎨 **Cybersecurity Training Screen** | Replaces the older cartoon guard with a cybersecurity-focused visual display and understated access countdown. | When the daily budget is exhausted, the access panel displays **TOMORROW**. |
 | 🛡️ **ScrollSentinel Shield Icon** | A shield surrounding stylized scrolling feed lines and a lock identifies the extension in Firefox without using another platform's branding. | Lightweight SVG asset in `icons/scrollsentinel.svg`. |
@@ -78,11 +97,11 @@ Strict Mode prevents changes **through this extension's interface** until the ch
 
 **Requirements:** Desktop Firefox and a downloaded copy of the repository. No Mozilla account or signing required.
 
-1. Open this repository: [github.com/Sayeed843/youtube-focus-hours](https://github.com/Sayeed843/youtube-focus-hours).
+1. Open this repository: [github.com/Sayeed843/scrollsentinel](https://github.com/Sayeed843/scrollsentinel).
 2. Click **Code → Download ZIP** and **extract** the ZIP, or clone it:
    ```bash
-   git clone https://github.com/Sayeed843/youtube-focus-hours.git
-   cd youtube-focus-hours
+   git clone https://github.com/Sayeed843/scrollsentinel.git
+   cd scrollsentinel
    ```
 3. In Firefox, enter **`about:debugging#/runtime/this-firefox`** in the address bar.
 4. Click **Load Temporary Add-on…**.
@@ -145,10 +164,11 @@ web-ext build
 ## 📁 Project structure
 
 ```text
-youtube-focus-hours/
+scrollsentinel/
 ├── manifest.json    # ScrollSentinel metadata and permissions
 ├── background.js    # Time windows, usage budget, local state and Strict Mode
-├── guard.js         # YouTube overlay, activity reports and UI filtering
+├── quest-stories.js # 11 illustrated story scenes; Networking lives in guard.js
+├── guard.js         # YouTube overlay, 30-minute quests, 5-minute story replays
 ├── popup.html       # Popup user interface
 ├── icons/
 │   └── scrollsentinel.svg # Shield + scroll + lock icon
@@ -160,7 +180,7 @@ youtube-focus-hours/
 
 ## 🔍 Known limitations & testing
 
-This is an **early development version**, **not** a verified Mozilla Add-ons release. No automated browser acceptance test suite has been run. Before relying on it, please test:
+This is an **early development version**, **not** a verified Mozilla Add-ons release. Automated JavaScript story checks are provided in `tests/quest-stories.test.cjs` (run with `node --test tests/quest-stories.test.cjs`), but **full Firefox/browser acceptance testing has not been completed**. Before relying on it, please test:
 
 - Time transitions at **12:00**, **14:00**, **22:00**, and **23:30** in your local time zone.
 - Budget consumption and blocking when the 90-minute limit is reached.
@@ -168,6 +188,7 @@ This is an **early development version**, **not** a verified Mozilla Add-ons rel
 - Strict Mode lock behavior, expiry, and Firefox restart behavior (using a signed install when available).
 - Multiple tabs, window focus, background audio/video and single-page YouTube navigation.
 - Whether the YouTube filters still work after interface updates.
+- All 12 visual stories at narrow and short viewport sizes, five-minute replay timing, reduced-motion preference, and tab visibility changes.
 
 YouTube may change HTML selectors; the filters and autoplay reduction are best effort. The blocker is a **page overlay**; it does not block mobile YouTube apps or network traffic.
 
@@ -185,6 +206,6 @@ Released under the **MIT License**. See [LICENSE](LICENSE).
 
 ---
 
-**GitHub repository URL:** The repository slug is still `youtube-focus-hours` for now; only the extension branding has changed. You can rename the repository later under GitHub **Settings → General → Repository name**. GitHub normally redirects the old URL, but update local Git remotes and links after the rename.
+**GitHub repository:** The official project repository is [Sayeed843/scrollsentinel](https://github.com/Sayeed843/scrollsentinel).
 
-**Source code:** [Sayeed843/youtube-focus-hours](https://github.com/Sayeed843/youtube-focus-hours) · **Issues and feedback:** [GitHub Issues](https://github.com/Sayeed843/youtube-focus-hours/issues)
+**Source code:** [Sayeed843/youtube-focus-hours](https://github.com/Sayeed843/scrollsentinel) · **Issues and feedback:** [GitHub Issues](https://github.com/Sayeed843/scrollsentinel/issues)

@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.5.0), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Development prototype (v2.5.1), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -20,6 +20,8 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 **Important:** Renaming this extension does **not** extend its permissions or blocking features to other websites. Facebook, Instagram and TikTok are future work only.
 
 **Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
+
+**v2.5.1 artwork fix:** The Least Privilege padlock is now positioned above the DATA card, keeping both its title and description visible. An automated regression check protects against the overlap returning.
 
 ## 🎬 Cybersecurity Learning Stories (12 animated quests)
 

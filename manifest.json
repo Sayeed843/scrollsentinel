@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "YouTube Focus Hours",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Scheduled YouTube blocking, a daily time budget, distraction-free mode and optional strict settings lock.",
   "icons": {
     "48": "icons/focus-shield.svg",

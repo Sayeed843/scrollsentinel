@@ -42,7 +42,7 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 | 🌌 **Quest-Specific Cybersecurity Visual Effects** | All **12** topics have distinct animated backgrounds, labels and colors: DNS, network packets, least privilege, patching, hashing, MFA, Zero Trust, Linux, threat modeling, phishing, CIA triad and ethical testing. | Visuals are locally generated with CSS and DOM (no network calls); animations are subdued and respect reduced-motion preferences. |
 | 📐 **Responsive Blocking Screen** | Adjusts art, typography, spacing and content placement for narrow or short Firefox windows. | On extremely small windows, page scrolling remains available; respects reduced-motion preferences. |
 | 🎨 **Cybersecurity Training Screen** | Replaces the older cartoon guard with a cybersecurity-focused visual display and understated access countdown. | When the daily budget is exhausted, the access panel displays **TOMORROW**. |
-| 🛡️ **Custom Shield Extension Icon** | A shield with a play symbol and padlock identifies the add-on in Firefox. | Lightweight SVG asset in `icons/focus-shield.svg`. |
+| 🛡️ **ScrollSentinel Shield Icon** | A shield surrounding stylized scrolling feed lines and a lock identifies the extension in Firefox without using another platform's branding. | Lightweight SVG asset in `icons/scrollsentinel.svg`. |
 | 🧩 **Firefox Toolbar Popup** | Shows access status, time used, viewing windows, daily limit, filter switch and Strict Mode controls. | Settings are saved with **Save settings**. |
 | 🔐 **Local-Only Settings** | Stores the schedule, lock expiration and estimated usage in Firefox's extension storage. | No external analytics server is used by the extension. |
 

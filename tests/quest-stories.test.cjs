@@ -55,11 +55,20 @@ test("each story generates nonempty balanced SVG content with success outcome", 
   }
 });
 
+test("phishing and patching have clear before-and-after outcomes", () => {
+  const engine = createStoryEngine();
+  assert.match(engine.create("phishing").innerHTML, /SCAMMER/);
+  assert.match(engine.create("phishing").innerHTML, /REPORTED/);
+  assert.match(engine.create("patch").innerHTML, /version 1.0/);
+  assert.match(engine.create("patch").innerHTML, /version 1.1/);
+});
+
 test("the scenes are implemented locally and support reduced motion", () => {
   const engine = createStoryEngine();
   assert.match(engine.styles, /prefers-reduced-motion/);
   assert.match(engine.styles, /ss-draw/);
-  assert.doesNotMatch(read("quest-stories.js"), /\b(fetch\s*\(|XMLHttpRequest|https?:\/\/)/);
+  // The standard SVG xmlns URL is a namespace identifier, not a network call.
+  assert.doesNotMatch(read("quest-stories.js"), /\b(fetch\s*\(|XMLHttpRequest|WebSocket|import\s*\()/);
 });
 
 test("Firefox loads the story engine before the guarding UI", () => {

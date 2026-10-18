@@ -173,10 +173,28 @@ scrollsentinel/
 ├── icons/
 │   └── scrollsentinel.svg # Shield + scroll + lock icon
 ├── popup.js         # Popup behavior and settings management
+├── tests/
+│   └── quest-stories.test.cjs # Dependency-free story and timing checks
+├── .github/workflows/
+│   └── quality.yml  # Automated GitHub Actions checks
 ├── README.md        # Documentation
 ├── LICENSE          # MIT license
 └── .gitignore       # Ignored build artifacts
 ```
+
+## 🧪 Automated quality checks
+
+GitHub Actions validates JavaScript syntax and runs the dependency-free Node test suite on pushes and pull requests.
+
+[![ScrollSentinel JavaScript QA](https://github.com/Sayeed843/scrollsentinel/actions/workflows/quality.yml/badge.svg)](https://github.com/Sayeed843/scrollsentinel/actions/workflows/quality.yml)
+
+To run the same story tests locally (requires Node.js):
+
+```bash
+node --test tests/quest-stories.test.cjs
+```
+
+**These are source-level tests, not a substitute for testing the extension in a live Firefox session.**
 
 ## 🔍 Known limitations & testing
 
@@ -208,4 +226,4 @@ Released under the **MIT License**. See [LICENSE](LICENSE).
 
 **GitHub repository:** The official project repository is [Sayeed843/scrollsentinel](https://github.com/Sayeed843/scrollsentinel).
 
-**Source code:** [Sayeed843/youtube-focus-hours](https://github.com/Sayeed843/scrollsentinel) · **Issues and feedback:** [GitHub Issues](https://github.com/Sayeed843/scrollsentinel/issues)
+**Source code:** [Sayeed843/scrollsentinel](https://github.com/Sayeed843/scrollsentinel) · **Issues and feedback:** [GitHub Issues](https://github.com/Sayeed843/scrollsentinel/issues)

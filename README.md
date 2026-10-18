@@ -4,7 +4,7 @@
 
 YouTube Focus Hours combines **scheduled access**, an **estimated daily browsing-time limit**, **7- or 14-day Strict Mode**, and a **Distraction-Free YouTube** view. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.2.0). The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Development prototype (v2.2.1). The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## ✨ Features and what they do
 
@@ -23,7 +23,7 @@ YouTube Focus Hours combines **scheduled access**, an **estimated daily browsing
 | 📱 **Reduce Shorts Distractions** | Hides selected Shorts shelves and Shorts navigation links. | **Does not comprehensively block every direct Shorts URL** in this version. |
 | 🔔 **Hide YouTube Notification Button** | Hides the corresponding YouTube toolbar element. | Does not change YouTube account notifications or Firefox notification permissions. |
 | ▶️ **Autoplay Reduction** | Attempts to turn off YouTube's next-video autoplay toggle. | **Best effort**; may not work after all YouTube layout changes. |
-| 🧠 **Cybersecurity Learning Motivation** | Displays rotating, original security-themed encouragement and practical mini learning challenges covering networking, authentication, Linux, phishing and threat modeling. | Tips rotate every 20 seconds while blocked; users can press **Next tip** to switch immediately. No network or AI service is required. |
+| 🧠 **Cybersecurity Learning Motivation** | Displays rotating, original security-themed encouragement and practical mini learning challenges covering networking, authentication, Linux, phishing and threat modeling. | Tips change only at **30-minute clock intervals** (:00 and :30), with a subtle reveal animation. Refreshing the page does not skip ahead and there is no manual Next tip button. Reduced-motion preferences are honored. No network or AI service is required. |
 | 📐 **Responsive Blocking Screen** | Adjusts art, typography, spacing and content placement for narrow or short Firefox windows. | On extremely small windows, page scrolling remains available; respects reduced-motion preferences. |
 | 🎭 **Animated Security Guard Block Page** | A playful animated firewall scene shows a security guard turning away a distracted visitor, with an access-denied sign and live countdown to the next access window. | Animations respect reduced-motion accessibility preferences. When the daily budget is exhausted, the page shows **TOMORROW** instead of the next window countdown. |
 | 🛡️ **Custom Shield Extension Icon** | A shield with a play symbol and padlock identifies the add-on in Firefox. | Lightweight SVG asset in `icons/focus-shield.svg`. |

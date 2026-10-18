@@ -11,6 +11,9 @@ const read = name => fs.readFileSync(path.join(projectRoot, name), "utf8");
 
 function createStoryEngine() {
   const script = read("quest-stories.js");
+  // Minimal DOMParser/DOM adapter. It records the parsed trusted SVG markup
+  // so the Node tests can check scene content without browser dependencies.
+  // Real XML/Firefox rendering is still a separate browser acceptance test.
   const sandbox = {
     document: {
       createElementNS(namespaceURI, tagName) {
@@ -19,7 +22,22 @@ function createStoryEngine() {
           tagName,
           attributes: {},
           innerHTML: "",
-          setAttribute(name, value) { this.attributes[name] = value; }
+          setAttribute(name, value) { this.attributes[name] = value; },
+          appendChild(node) { this.innerHTML += node.markup; }
+        };
+      },
+      importNode(node) { return node; }
+    },
+    DOMParser: class {
+      parseFromString(markup, type) {
+        assert.equal(type, "image/svg+xml");
+        assert.match(markup, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg">/);
+        return {
+          documentElement: {
+            localName: "svg",
+            childNodes: [{ markup: markup.replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "") }]
+          },
+          getElementsByTagName() { return []; }
         };
       }
     }
@@ -80,6 +98,17 @@ test("Least Privilege lock does not cover DATA card text", () => {
     padlock.top < dataCard.bottom &&
     padlock.bottom > dataCard.top;
   assert.equal(overlaps, false, "Lock must remain outside the DATA card");
+});
+
+test("Mozilla validation warning: no unsafe innerHTML writes", () => {
+  for (const sourceFile of ["guard.js", "quest-stories.js"]) {
+    assert.doesNotMatch(
+      read(sourceFile), /\.innerHTML\s*=/,
+      sourceFile + " must use inert parsing and imported DOM nodes"
+    );
+  }
+  assert.match(read("guard.js"), /appendTrustedMarkup\(panel, panelMarkup\)/);
+  assert.match(read("quest-stories.js"), /new DOMParser\(\)\.parseFromString/);
 });
 
 test("the scenes are implemented locally and support reduced motion", () => {

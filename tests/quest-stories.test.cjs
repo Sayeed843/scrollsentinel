@@ -71,7 +71,7 @@ test("Least Privilege lock does not cover DATA card text", () => {
   const dataCard = {left: 382, right: 490, top: 97, bottom: 169};
   assert.match(svg, /DATA/);
   assert.match(svg, /sensitive/);
-  const match = svg.match(/transform="translate\\((\\d+) (\\d+)\\)"[^>]*><path d="M-10 0v-10/);
+  const match = svg.match(/transform="translate\((\d+) (\d+)\)"[^>]*><path d="M-10 0v-10/);
   assert.ok(match, "Padlock position should be identifiable in the SVG");
   const [x, y] = match.slice(1).map(Number);
   const padlock = {left: x-17, right: x+17, top: y-20, bottom: y+26};

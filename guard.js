@@ -1,4 +1,16 @@
 const api = browser;
+
+// Parse fixed extension-owned markup in an inert document rather than using
+// innerHTML on a live page element. The strings passed here are hard-coded UI
+// templates/illustrations, never user input or website-provided content.
+function appendTrustedMarkup(target, markup) {
+  const inert = new DOMParser().parseFromString(markup, 'text/html');
+  const fragment = document.createDocumentFragment();
+  for (const node of inert.body.childNodes) {
+    fragment.appendChild(document.importNode(node, true));
+  }
+  target.appendChild(fragment);
+}
 let state = null;
 let overlay = null;
 let countdownNode = null;
@@ -126,7 +138,7 @@ function makeNetworkPeopleAnimation() {
     markup += '<rect class="net-confetti net-confetti-'+i+'" x="'+x+'" y="'+y+'" width="6" height="10" rx="2" fill="'+palette[i%palette.length]+'" style="--fall:'+(28+(i*11)%42)+'px;animation-delay:'+(6.55+(i%6)*.07)+'s"/>';
   }
   markup+='</svg>';
-  stage.innerHTML=markup;
+  appendTrustedMarkup(stage, markup);
   const celebration=document.createElement('div');
   celebration.className='net-celebration';
   celebration.textContent='🎉 4 / 4 CONNECTED — NETWORK ACHIEVEMENT!';
@@ -228,7 +240,7 @@ function createOverlay() {
   shadow.appendChild(style);
   const panel = document.createElement('div');
   panel.className = 'scene';
-  panel.innerHTML =
+  const panelMarkup =
     '<div class="cyber-fx" aria-hidden="true" id="fh-fx"></div>' +
     '<main class="layout" role="main">' +
       '<header class="brand"><div class="eyebrow">🛡️ SCROLLSENTINEL // CYBERSECURITY TRAINING</div>' +
@@ -251,6 +263,7 @@ function createOverlay() {
       '</div>' +
       '<footer>FOCUS SYSTEM ACTIVE · STAY CURIOUS · PRACTICE ONLY ON AUTHORIZED SYSTEMS</footer>' +
     '</main>';
+  appendTrustedMarkup(panel, panelMarkup);
   shadow.appendChild(panel);
   countdownNode = shadow.getElementById('fh-count');
   subtitleNode = shadow.getElementById('fh-message');

@@ -162,8 +162,8 @@ function createOverlay() {
   panel.innerHTML =
     '<div class="cyber-fx" aria-hidden="true" id="fh-fx"></div>' +
     '<main class="layout" role="main">' +
-      '<header class="brand"><div class="eyebrow">🛡️ FOCUS HOURS // CYBERSECURITY TRAINING</div>' +
-      '<h1>YouTube <em>Focus Hours</em></h1><p class="tagline">Turn a distraction into a cybersecurity learning opportunity.</p></header>' +
+      '<header class="brand"><div class="eyebrow">🛡️ SCROLLSENTINEL // CYBERSECURITY TRAINING</div>' +
+      '<h1>Scroll<em>Sentinel</em></h1><p class="tagline">Guard your focus. Learn cybersecurity. Scroll on your schedule.</p></header>' +
       '<div class="quest-stage">' +
         '<section class="quest-primary" aria-label="Current cybersecurity side quest">' +
           '<div class="quest-topline"><span>🧠 CYBERSECURITY SIDE QUEST</span><span class="interval-chip">NEW EVERY 30 MIN</span></div>' +

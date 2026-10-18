@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.5.2), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Development prototype (v2.5.3), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -21,7 +21,13 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 
 **Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
 
-**v2.5.2 artwork fix:** The Least Privilege padlock is now positioned above the DATA card, keeping both its title and description visible. An automated regression check protects against the overlap returning.
+**v2.5.3 artwork fix:** The Least Privilege padlock is now positioned above the DATA card, keeping both its title and description visible. An automated regression check protects against the overlap returning.
+
+### Mozilla Add-ons submission update (v2.5.3)
+
+The initial Mozilla validation of v2.5.2 succeeded with two `Unsafe assignment to innerHTML` warnings, one in `guard.js` and one in `quest-stories.js`. Version **2.5.3** removes all `innerHTML` assignments and instead parses **extension-owned, fixed** UI/story markup into an inert document before importing its DOM nodes.
+
+The application does not insert user-controlled strings or YouTube page data into these templates. The tests now enforce that no `innerHTML` writes are reintroduced. Revalidate **the new ZIP** on Mozilla Add-ons; passing the project tests is not a guarantee that AMO has no other warnings.
 
 ## 🎬 Cybersecurity Learning Stories (12 animated quests)
 

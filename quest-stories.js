@@ -152,11 +152,25 @@
     svg.setAttribute('viewBox','0 0 520 260');
     svg.setAttribute('preserveAspectRatio','xMidYMid meet');
     svg.setAttribute('aria-hidden','true');
-    svg.innerHTML='<defs><radialGradient id="ss-stage" cx="50%" cy="42%" r="70%">'+
+    // Parse built-in illustration markup into an inert SVG document instead of
+    // assigning markup to innerHTML in the live Firefox content-script DOM.
+    // All scene strings are extension-owned constants, never user/site content.
+    const illustration =
+      '<defs><radialGradient id="ss-stage" cx="50%" cy="42%" r="70%">'+
       '<stop stop-color="#1a3f56"/><stop offset="1" stop-color="#081726"/></radialGradient></defs>'+
       '<rect width="520" height="260" rx="12" fill="url(#ss-stage)"/>'+
       '<path d="M0 210H520" stroke="#4e6d83" stroke-opacity=".35" stroke-dasharray="8 9"/>'+
       scenes[type]();
+    const parsed = new DOMParser().parseFromString(
+      '<svg xmlns="'+ns+'">'+illustration+'</svg>', 'image/svg+xml'
+    );
+    if (parsed.documentElement.localName !== 'svg' ||
+        parsed.getElementsByTagName('parsererror').length) {
+      throw new Error('Unable to parse the built-in cybersecurity story');
+    }
+    for (const node of parsed.documentElement.childNodes) {
+      svg.appendChild(document.importNode(node, true));
+    }
     return svg;
   }
   globalThis.ScrollSentinelStories = Object.freeze({

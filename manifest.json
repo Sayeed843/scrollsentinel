@@ -1,11 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Focus Hours",
-  "version": "2.3.0",
-  "description": "Scheduled YouTube blocking, a daily time budget, distraction-free mode and optional strict settings lock.",
+  "name": "ScrollSentinel",
+  "version": "2.4.0",
+  "description": "Focus on YouTube today: scheduled access, daily limits, Strict Mode and cybersecurity learning quests. More platforms planned.",
   "icons": {
-    "48": "icons/focus-shield.svg",
-    "96": "icons/focus-shield.svg"
+    "16": "icons/scrollsentinel.svg",
+    "32": "icons/scrollsentinel.svg",
+    "48": "icons/scrollsentinel.svg",
+    "96": "icons/scrollsentinel.svg",
+    "128": "icons/scrollsentinel.svg"
   },
   "permissions": [
     "storage",
@@ -24,7 +27,11 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "icons/focus-shield.svg"
+    "default_icon": {
+      "16": "icons/scrollsentinel.svg",
+      "32": "icons/scrollsentinel.svg",
+      "48": "icons/scrollsentinel.svg"
+    }
   },
   "content_scripts": [
     {

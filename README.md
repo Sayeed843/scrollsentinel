@@ -1,10 +1,25 @@
-# 🎯 YouTube Focus Hours
+# 🛡️ ScrollSentinel
 
-**A Firefox extension that helps you use YouTube on your schedule—not YouTube's.**
+<img src="icons/scrollsentinel.svg" alt="ScrollSentinel app icon" width="110" align="right">
 
-YouTube Focus Hours combines **scheduled access**, an **estimated daily browsing-time limit**, **7- or 14-day Strict Mode**, and a **Distraction-Free YouTube** view. It is open source and stores its settings locally.
+**Take control of your scroll.** A distraction-control and cybersecurity-learning Firefox extension.
 
-> **Project status:** Development prototype (v2.3.0). The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
+
+> **Project status:** Development prototype (v2.4.0), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+
+## 🌍 Supported platforms — current vs planned
+
+| Website | Current support | Planned direction |
+| --- | --- | --- |
+| **YouTube** | ✅ Working development implementation: timed access, daily browsing budget, distraction-free UI, cybersecurity quests | Improve testing and reliability |
+| **Facebook / Reels / Videos** | ⏳ **Not implemented** | Optional selective blocking for Reels/video views, with site-specific settings |
+| **Instagram / Reels** | ⏳ **Not implemented** | Optional website/short-form-video restrictions |
+| **TikTok** | ⏳ **Not implemented** | Scheduled site blocking and time budgeting |
+
+**Important:** Renaming this extension does **not** extend its permissions or blocking features to other websites. Facebook, Instagram and TikTok are future work only.
+
+**Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
 
 ## ✨ Features and what they do
 
@@ -62,7 +77,7 @@ Strict Mode prevents changes **through this extension's interface** until the ch
 3. In Firefox, enter **`about:debugging#/runtime/this-firefox`** in the address bar.
 4. Click **Load Temporary Add-on…**.
 5. Select the extracted project's **`manifest.json`** file.
-6. Open the **Extensions** (puzzle-piece) menu, choose **YouTube Focus Hours**, adjust your settings, and click **Save settings**.
+6. Open the **Extensions** (puzzle-piece) menu, choose **ScrollSentinel**, adjust your settings, and click **Save settings**.
 
 **Reminder:** Temporary add-ons are unloaded when you **restart Firefox**. To test again, repeat steps 3–5. In `about:debugging`, use **Reload** after you edit the extension's source files.
 
@@ -121,12 +136,12 @@ web-ext build
 
 ```text
 youtube-focus-hours/
-├── manifest.json    # WebExtension metadata and permissions
+├── manifest.json    # ScrollSentinel metadata and permissions
 ├── background.js    # Time windows, usage budget, local state and Strict Mode
 ├── guard.js         # YouTube overlay, activity reports and UI filtering
 ├── popup.html       # Popup user interface
 ├── icons/
-│   └── focus-shield.svg # Extension icon
+│   └── scrollsentinel.svg # Shield + scroll + lock icon
 ├── popup.js         # Popup behavior and settings management
 ├── README.md        # Documentation
 ├── LICENSE          # MIT license
@@ -159,5 +174,7 @@ Settings, lock information and approximate usage counters are stored **locally**
 Released under the **MIT License**. See [LICENSE](LICENSE).
 
 ---
+
+**GitHub repository URL:** The repository slug is still `youtube-focus-hours` for now; only the extension branding has changed. You can rename the repository later under GitHub **Settings → General → Repository name**. GitHub normally redirects the old URL, but update local Git remotes and links after the rename.
 
 **Source code:** [Sayeed843/youtube-focus-hours](https://github.com/Sayeed843/youtube-focus-hours) · **Issues and feedback:** [GitHub Issues](https://github.com/Sayeed843/youtube-focus-hours/issues)

@@ -223,7 +223,7 @@ function formatCountdown(seconds) {
 function createOverlay() {
   overlay = document.createElement('div');
   overlay.id = 'focus-hours-overlay';
-  overlay.style.cssText = 'position:fixed!important;inset:0!important;z-index:2147483647!important;display:block!important;background:#090f1b!important;color:#fff!important;';
+  overlay.style.cssText = 'position:fixed!important;inset:0!important;z-index:2147483646!important;display:block!important;background:#090f1b!important;color:#fff!important;';
   const shadow = overlay.attachShadow({mode:'closed'});
   const style = document.createElement('style');
   style.textContent = pageCSS + '\n' + (globalThis.ScrollSentinelStories?.styles || '');

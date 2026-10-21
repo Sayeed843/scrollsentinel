@@ -56,6 +56,32 @@ After **60 minutes of observed, foreground video playback across YouTube, Facebo
 
 **Limitations:** This is a best-effort **Firefox browser extension**, not a system-level lock. Videos in mobile apps, other browsers, protected players or inaccessible embedded/closed-shadow/canvas-based players may not be detected or paused. A user can disable the extension, clear local extension storage or change the device clock. Use the feature to support healthy habits, not as a tamper-proof control.
 
+### Quick visual preview for developers (no 60-minute wait)
+
+To preview the meadow and all four timed stages without watching an hour of video:
+
+1. Temporarily load the **v2.7.0 development** extension using Firefox `about:debugging#/runtime/this-firefox`. Select **Inspect** for the extension's background script to open its debugger console.
+2. In that **extension background console** (not in a website's console), execute:
+
+```js
+await browser.storage.local.set({
+  videoWatchedSeconds: 3600,
+  restUntilMs: Date.now() + 120000
+});
+```
+
+3. Open or reload a supported website in a normal Firefox tab, e.g., `https://www.facebook.com/`. The village overlay should appear. Observe the **four 30-second stages**; pausing and changing tabs should not restart the two-minute deadline.
+4. To restore the normal counter for development, execute:
+
+```js
+await browser.storage.local.set({
+  videoWatchedSeconds: 0,
+  restUntilMs: 0
+});
+```
+
+5. Refresh the test tab. **Do not use this developer test shortcut as normal production behavior**; it is only for testing. Users can also disable an extension or clear its storage, so the rest is not tamper-proof.
+
 ## ⏰ Flexible YouTube Schedules (v2.6.0)
 
 The popup now allows **four schedule slots**: two built-in schedules and up to two user-created custom schedules.

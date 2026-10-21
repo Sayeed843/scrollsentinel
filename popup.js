@@ -108,7 +108,16 @@ function toggleControls() {
 
 async function load() {
   try {
-    const s = await browser.runtime.sendMessage({type:'status'});
+    const [s, eyeBreak] = await Promise.all([
+      browser.runtime.sendMessage({type:'status'}),
+      browser.runtime.sendMessage({type:'videoBreakStatus'})
+    ]);
+    el('wellness-status').textContent = eyeBreak.resting
+      ? '🌱 Break in progress: ' + Math.ceil(eyeBreak.restRemainingSeconds / 60) +
+        ' min (' + eyeBreak.restRemainingSeconds + ' sec) remaining.'
+      : '🌱 Next 2-minute break after ' +
+        Math.ceil(eyeBreak.secondsUntilBreak / 60) +
+        ' more minutes of video playback.';
     windows = Schedule.normalizeWindows(s.windows);
     locked = s.locked;
     el('enabled').checked = s.enabled;

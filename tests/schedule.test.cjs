@@ -68,7 +68,7 @@ test("invalid or missing times cannot be saved, including custom slots", () => {
   assert.match(model.validateWindows([...original(),w("","",false)]), /start\/end/);
   assert.match(model.validateWindows([w("15:00","15:00"),original()[1]]), /start\/end/);
   assert.match(model.validateWindows([w("25:00","26:00"),original()[1]]), /start\/end/);
-  assert.match(model.validateWindows([w("12:00","14:00",true),w("22:00","23:30",undefined)]), /selection/);
+  assert.match(model.validateWindows([w("12:00","14:00",true),{start:"22:00",end:"23:30",selected:undefined}]), /selection/);
 });
 
 test("unchecked slots never grant YouTube access", () => {

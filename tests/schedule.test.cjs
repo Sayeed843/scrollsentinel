@@ -36,6 +36,7 @@ test("exactly two or three selected schedules are allowed; four is rejected", ()
   assert.match(model.validateWindows(four), /no more than 3/);
   four[0].selected = false;
   four[1].selected = false;
+  four[3].selected = false;
   assert.match(model.validateWindows(four), /at least 2/);
   assert.match(model.validateWindows([w("12:00","13:00")]), /2 original/);
   assert.match(model.validateWindows([...four, w("18:00","19:00")]), /up to 2/);

@@ -1,14 +1,15 @@
 {
   "manifest_version": 3,
   "name": "ScrollSentinel",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "description": "Focus on YouTube today: scheduled access, daily limits, Strict Mode and cybersecurity learning quests. More platforms planned.",
   "icons": {
-    "16": "icons/scrollsentinel.svg",
-    "32": "icons/scrollsentinel.svg",
-    "48": "icons/scrollsentinel.svg",
-    "96": "icons/scrollsentinel.svg",
-    "128": "icons/scrollsentinel.svg"
+    "16": "icons/scrollsentinel-16.png",
+    "32": "icons/scrollsentinel-32.png",
+    "48": "icons/scrollsentinel-48.png",
+    "64": "icons/scrollsentinel-64.png",
+    "96": "icons/scrollsentinel-96.png",
+    "128": "icons/scrollsentinel-128.png"
   },
   "permissions": [
     "storage",
@@ -28,9 +29,11 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "icons/scrollsentinel.svg",
-      "32": "icons/scrollsentinel.svg",
-      "48": "icons/scrollsentinel.svg"
+      "16": "icons/scrollsentinel-16.png",
+      "32": "icons/scrollsentinel-32.png",
+      "48": "icons/scrollsentinel-48.png",
+      "64": "icons/scrollsentinel-64.png",
+      "128": "icons/scrollsentinel-128.png"
     }
   },
   "content_scripts": [

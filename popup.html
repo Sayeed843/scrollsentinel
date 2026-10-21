@@ -1,1 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{font:14px system-ui;width:310px;padding:16px;background:#0d1727;color:#f5f5f5}h2{margin:0;font-size:20px}.brand-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}.brand-head img{border-radius:10px;flex-shrink:0}.brand-subtitle{display:block;color:#90bfd8;font-size:11px;letter-spacing:.3px}label{display:block;margin:12px 0}input[type=time],input[type=number],select{background:#fff;color:#111;border:0;border-radius:6px;padding:7px;max-width:105px}input[type=number]{width:65px}button{padding:12px;width:100%;border:0;border-radius:6px;background:#126eaf;color:#fff;font-weight:700;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.row{margin:10px 0}.status{font-weight:700;margin:12px 0}small{color:#bababa}</style></head><body><header class="brand-head"><img src="icons/scrollsentinel-48.png" width="44" height="44" alt="ScrollSentinel shield icon"><div><h2>ScrollSentinel</h2><span class="brand-subtitle">YouTube Focus Protection</span></div></header><label><input type="checkbox" id="enabled"> Enable YouTube blocking</label><div id="status" class="status"></div><div id="usage" class="status"></div><div class="row">Window 1: <input type="time" id="s1"> – <input type="time" id="e1"></div><div class="row">Window 2: <input type="time" id="s2"> – <input type="time" id="e2"></div><label>Daily limit: <input type="number" min="1" max="1440" id="dailyLimit"> minutes</label><label><input type="checkbox" id="distractionFree"> Distraction-Free YouTube</label><label>Strict Mode: <select id="lockDays"><option value="0">No lock</option><option value="7">7 days</option><option value="14">14 days</option></select></label><div id="lockStatus" class="status" role="status"></div><button id="save">Save settings</button><p><small>Strict Mode locks the settings inside this add-on. It cannot prevent Firefox from disabling/uninstalling the extension or local data from being erased. Usage is estimated from focused YouTube tabs.</small></p><script src="popup.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{font:13px system-ui,-apple-system,sans-serif;width:380px;max-width:100%;margin:0;padding:17px;background:#0c1728;color:#edf6ff}
+.brand-head{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.brand-head img{border-radius:11px;flex-shrink:0}
+h1{margin:0;font-size:21px;line-height:1.1;font-weight:800}
+.brand-subtitle{color:#82bada;font-size:11px}
+label{cursor:pointer}
+.headline{display:flex;justify-content:space-between;gap:12px;align-items:center}
+h2{font-size:14px;margin:0;font-weight:800}
+.intro{margin:6px 0 10px;font-size:12px;line-height:1.4;color:#a9bfd1}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:10px 0 14px}
+.status{font-size:12px;font-weight:650;color:#bde1f5}
+.toggle{margin:11px 0;display:flex;gap:8px;align-items:center}
+.toggle input{accent-color:#51cafe}
+.card{border:1px solid #2e4d65;border-radius:11px;background:#12243b;padding:10px 11px;margin-top:8px}
+.schedule-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:9px}
+.check-label{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:750}
+.check-label input{width:16px;height:16px;margin:0;accent-color:#49d2aa}
+.origin{font-size:10px;color:#8fb2c9;border:1px solid #496176;padding:2px 6px;border-radius:20px}
+.times{display:flex;align-items:center;gap:7px}
+.time-label{display:flex;flex:1;flex-direction:column;gap:4px;font-size:10px;color:#abc1d5}
+.time-label input{width:100%;min-width:0}
+.time-divider{padding-top:17px;color:#8fa7bc}
+input[type=time],input[type=number],select{background:#f2f7fc;color:#152235;border:0;border-radius:6px;padding:7px;font:inherit}
+input[type=number]{width:80px}
+.button{cursor:pointer;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:8px 12px;border:1px solid #42718d;color:#d7f2ff;background:#183750;font-weight:750}
+.button:hover:not(:disabled){background:#205475}
+.button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #62d7fe;outline-offset:2px}
+.button:disabled{cursor:default;opacity:.45}
+.add-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:11px 0 8px}
+.count-text{font-size:11px;color:#9bc4d7}
+.delete{font-size:11px;padding:5px 8px;border-color:#785066;color:#ffcad5;background:#392339}
+.form-error{font-size:12px;color:#ffb8be;line-height:1.4;min-height:18px;margin:8px 0}
+.form-valid{color:#88eac6}
+.section{border-top:1px solid #2c4355;padding-top:12px;margin-top:12px}
+.settings-row{display:flex;gap:9px;align-items:center;margin:10px 0}
+.save{background:#0c8ab3;border:0;color:white;font-weight:800;font-size:14px;width:100%;padding:12px;margin-top:11px}
+.save:hover:not(:disabled){background:#17a4d0}
+.hint{font-size:11px;line-height:1.45;color:#a5b8c7;margin:12px 0 2px}
+#lockStatus{margin:8px 0;color:#a9e3fc}
+</style>
+</head>
+<body>
+<header class="brand-head">
+  <img src="icons/scrollsentinel-48.png" width="46" height="46" alt="ScrollSentinel shield icon">
+  <div><h1>ScrollSentinel</h1><span class="brand-subtitle">YouTube Focus Protection</span></div>
+</header>
+<label class="toggle"><input type="checkbox" id="enabled"> Enable YouTube blocking</label>
+<div class="stats"><span class="status" id="status" role="status"></span><span class="status" id="usage"></span></div>
+<section aria-labelledby="schedule-title">
+  <div class="headline"><h2 id="schedule-title">Allowed viewing schedules</h2><span class="origin">2–3 active</span></div>
+  <p class="intro">Keep the original two schedules (editable, not removable). Add up to two more. Select at least 2 and no more than 3. Times must never overlap—even for unchecked schedules.</p>
+  <div id="schedule-list"></div>
+  <div class="add-row"><span class="count-text" id="selection-count" aria-live="polite"></span><button type="button" id="add-schedule" class="button">+ Add schedule</button></div>
+  <p id="schedule-error" class="form-error" role="status" aria-live="polite"></p>
+</section>
+<section class="section" aria-label="Focus settings">
+  <div class="settings-row"><label for="dailyLimit">Daily YouTube limit</label><input type="number" min="1" max="1440" id="dailyLimit"><span>min</span></div>
+  <label class="toggle"><input type="checkbox" id="distractionFree"> Distraction-Free YouTube</label>
+  <div class="settings-row"><label for="lockDays">Strict Mode</label>
+    <select id="lockDays"><option value="0">No lock</option><option value="7">7 days</option><option value="14">14 days</option></select>
+  </div>
+  <div id="lockStatus" role="status"></div>
+</section>
+<button id="save" class="button save">Save settings</button>
+<p class="hint">Strict Mode locks schedules and other settings inside ScrollSentinel, not Firefox itself. The 90-minute default daily limit tracks approximate focused YouTube tab usage.</p>
+<script src="schedule.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

@@ -63,6 +63,11 @@ function displaySchedules() {
       del.disabled = locked || working;
       del.setAttribute('aria-label', 'Delete custom schedule ' + (index + 1));
       del.addEventListener('click', () => {
+        if (w.selected && selectionCount() <= 2) {
+          announcement = 'Select another schedule before deleting this one (minimum 2 active).';
+          validation();
+          return;
+        }
         windows.splice(index, 1);
         announcement = 'Custom schedule deleted. Save to keep this change.';
         displaySchedules();

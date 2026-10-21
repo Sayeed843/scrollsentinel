@@ -122,7 +122,7 @@ test("the scenes are implemented locally and support reduced motion", () => {
 test("Firefox loads the story engine before the guarding UI", () => {
   const manifest = JSON.parse(read("manifest.json"));
   const scriptNames = manifest.content_scripts[0].js;
-  assert.deepEqual(scriptNames, ["quest-stories.js", "guard.js"]);
+  assert.deepEqual(scriptNames, ["schedule.js", "quest-stories.js", "guard.js"]);
   assert.equal(manifest.name, "ScrollSentinel");
   assert.deepEqual(Array.from(manifest.browser_specific_settings.gecko.data_collection_permissions.required), ["none"]);
   assert.equal(manifest.browser_specific_settings.gecko.id, "youtube-focus-hours@example.org");

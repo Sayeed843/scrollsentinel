@@ -145,3 +145,19 @@ test("the extension still targets YouTube only in this release", () => {
   assert.ok(manifest.content_scripts[0].matches.every(s => /youtube\.com|youtu\.be/.test(s)));
   assert.ok(manifest.host_permissions.every(s => /youtube\.com|youtu\.be/.test(s)));
 });
+
+test("Firefox extension and toolbar icons use correctly sized PNG assets", () => {
+  const manifest = JSON.parse(read("manifest.json"));
+  for (const [size, relativePath] of Object.entries(manifest.icons)) {
+    assert.ok(relativePath.endsWith(".png"), "Expected PNG: " + relativePath);
+    const bytes = fs.readFileSync(path.join(projectRoot, relativePath));
+    assert.equal(bytes.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", relativePath);
+    assert.equal(bytes.readUInt32BE(16), Number(size), relativePath + " width");
+    assert.equal(bytes.readUInt32BE(20), Number(size), relativePath + " height");
+  }
+  for (const [size, relativePath] of Object.entries(manifest.action.default_icon)) {
+    assert.equal(relativePath, manifest.icons[size]);
+  }
+  assert.ok(read("popup.html").includes('src="icons/scrollsentinel-48.png"'));
+  assert.ok(read(".github/workflows/amo-package.yml").includes("icons/scrollsentinel-*.png"));
+});

@@ -4,20 +4,20 @@
 
 **Take control of your scroll.** A distraction-control and cybersecurity-learning Firefox extension.
 
-ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
+ScrollSentinel provides **scheduled blocking and focus controls for YouTube**, plus a shared **60-minute video-watching / 2-minute wellness-break cycle** across YouTube, Facebook, Instagram and TikTok (in Firefox Desktop). The app also includes 12 illustrated cybersecurity quests. All settings and approximate usage counters stay on your device.
 
-> **Project status:** Mozilla has publicly approved **v2.5.3**. The GitHub source is now **v2.6.0**, including PNG icon support and a redesigned four-slot schedule editor. **v2.6.0 is not yet a Mozilla Store update**; it must be submitted as a new signed version.
+> **Release status:** The Mozilla Store currently has publicly approved **v2.5.3**. The GitHub source is now **v2.7.0**, including PNG icons, configurable YouTube schedules and the new **four-platform video wellness break**. Users on the Store version will **not** receive these changes until v2.7.0 is submitted, signed and published.
 
-## 🌍 Supported platforms — current vs planned
+## 🌍 Platform support — v2.7.0 development version
 
-| Website | Current support | Planned direction |
+| Website | Scheduled blocking / daily limit | 60-minute video-watching break |
 | --- | --- | --- |
-| **YouTube** | ✅ Working development implementation: timed access, daily browsing budget, distraction-free UI, cybersecurity quests | Improve testing and reliability |
-| **Facebook / Reels / Videos** | ⏳ **Not implemented** | Optional selective blocking for Reels/video views, with site-specific settings |
-| **Instagram / Reels** | ⏳ **Not implemented** | Optional website/short-form-video restrictions |
-| **TikTok** | ⏳ **Not implemented** | Scheduled site blocking and time budgeting |
+| **YouTube** | ✅ Adjustable 2–3 viewing windows, daily browsing limit, focus screen, Strict Mode and distraction reduction | ✅ Plays up to 60 minutes of observed video before a two-minute rest |
+| **Facebook / Reels / Videos** | ⏳ Not yet implemented | ✅ Shared timer and rest screen on detected HTML5 videos |
+| **Instagram / Reels** | ⏳ Not yet implemented | ✅ Shared timer and rest screen on detected HTML5 videos |
+| **TikTok** | ⏳ Not yet implemented | ✅ Shared timer and rest screen on detected HTML5 videos |
 
-**Important:** Renaming this extension does **not** extend its permissions or blocking features to other websites. Facebook, Instagram and TikTok are future work only.
+**Important:** The non-YouTube websites have **only the video wellness break**, not YouTube's schedule limits, Strict Mode site blocking, or Distraction-Free controls. Facebook, Instagram and TikTok viewing controls are planned for later releases. These new browser-site permissions require approval when Mozilla publishes a new extension version.
 
 **Brand identity:** The ScrollSentinel shield surrounds scrolling-feed lines and a lock, symbolizing focused browsing without tying the icon to a particular social platform. The add-on keeps its original internal Firefox extension ID for compatibility.
 
@@ -33,9 +33,28 @@ The application does not insert user-controlled strings or YouTube page data int
 
 Firefox's installed Add-ons Manager displayed the generic puzzle-piece icon even after the Store listing image was set. The original SVG is retained as a vector source, while size-matched **16, 32, 48, 64, 96 and 128 px PNG files** have been included. Both extension icons and toolbar action icons now reference PNG. Although Firefox supports SVG icons, using exact-size PNG images avoids SVG-specific rendering or packaging surprises.
 
-**Important:** The publicly approved Mozilla Store release is still v2.5.3. The PNG icon changes will reach Store users only when the newer v2.6.0 version is signed and published.
+**Important:** The publicly approved Mozilla Store release is still v2.5.3. The PNG icon changes will reach Store users only when the newer v2.7.0 version is signed and published.
 
 [Official ScrollSentinel Mozilla Add-ons listing](https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/)
+
+## 🌿 Screen Break / Eye Care (v2.7.0)
+
+After **60 minutes of observed, foreground video playback across YouTube, Facebook, Instagram and TikTok combined**, ScrollSentinel pauses the detected HTML5 video(s) and displays a **2-minute illustrated countryside village scene** with a friendly human face, animated eyes, a break countdown, and progress indicators.
+
+| Break stage | Length | Screen prompt / animation |
+| --- | --- | --- |
+| **1. Eyes** | **30 seconds** | An illustrated face moves its pupils gently **counter-clockwise**. The user may follow a comfortable circle with their gaze; stop if the motion feels unpleasant. |
+| **2. Breathe** | **30 seconds** | A softly expanding and contracting orb guides gentle inhaling and exhaling. |
+| **3. Walk** | **30 seconds** | A walking figure invites the user to stand up or move around if comfortable. |
+| **4. Breathe again** | **30 seconds** | Another calm breathing exercise closes the two-minute rest. |
+
+**How the limit works:** Playback on the four sites contributes to a **single shared hour**, not four separate one-hour allowances. Only detected video that is playing and visible in the active, focused Firefox tab is counted (approximately one second at a time). Leaving a page open without watching video doesn't count, and time spent in the break doesn't count. After the full two minutes, the overlay clears and a fresh 60-minute video allowance begins. Videos **remain paused** until the user presses Play.
+
+**Independent from YouTube scheduling:** YouTube still has its separate default **90-minute daily browsing budget** and selected access windows. Reaching the 60-minute video threshold triggers a two-minute rest, **not** a permanent daily ban. If YouTube's own daily budget or schedule disallows access, the rest completion does not override those rules. Facebook, Instagram and TikTok are **not scheduled-blocked** by this release.
+
+**Persistence, accessibility and privacy:** The timer and rest deadline are stored locally in Firefox, shared across matching tabs and supported sites; reloading doesn't reset a break. The deadline is based on the computer clock, so closing Firefox for two minutes also completes the break. Illustrations are bundled CSS/SVG with no image downloads. Animations respect `prefers-reduced-motion`. The on-screen exercises are **gentle prompts**, not medical treatment, and the extension cannot verify whether anyone physically walked or breathed.
+
+**Limitations:** This is a best-effort **Firefox browser extension**, not a system-level lock. Videos in mobile apps, other browsers, protected players or inaccessible embedded/closed-shadow/canvas-based players may not be detected or paused. A user can disable the extension, clear local extension storage or change the device clock. Use the feature to support healthy habits, not as a tamper-proof control.
 
 ## ⏰ Flexible YouTube Schedules (v2.6.0)
 
@@ -87,6 +106,7 @@ Stories are educational analogies, **not precise simulations of networking proto
 
 | Feature | What it does | Important details |
 | --- | --- | --- |
+| 🌿 **Cross-platform Video Wellness Break** | After approximately **60 minutes of visible HTML5 video playback** across YouTube, Facebook, Instagram and TikTok, pauses videos and displays a **2-minute village-themed rest**. | Four 30-second stages: counter-clockwise eye movement, breathing, walking, breathing; shared local timer; does **not** auto-play videos afterward. |
 | ⏰ **Scheduled YouTube Access** | Choose **2–3 active schedules** from two built-in (editable, undeletable) slots and up to two custom (removable) slots. | Built-in defaults: **12:00–14:00** and **22:00–23:30**. No overlap between any configured schedules, including unchecked ones. |
 | 🚫 **Automatic YouTube Blocker** | Covers YouTube pages with a blocking overlay whenever access is not allowed. | Applies to matching YouTube browser pages; **not** a system-wide block, and it does not block other browsers or apps. |
 | ⏳ **Daily Time Budget** | Stops access after your daily allowance is used, even during an allowed window. | Default: **90 minutes/day**; configurable between 1 and 1440 minutes. |
@@ -200,7 +220,10 @@ web-ext build
 scrollsentinel/
 ├── manifest.json    # ScrollSentinel metadata and permissions
 ├── schedule.js      # Shared 2–3-selection and nonoverlapping time validation
-├── background.js    # Active schedule enforcement, usage budget and Strict Mode
+├── break-core.js    # Shared 60-minute / 2-minute persistent timer state machine
+├── break-visual.js  # Locally rendered countryside and exercise animations
+├── break.js         # Detect video playback, pause and show wellness overlay
+├── background.js    # Active schedule enforcement, video break accounting and Strict Mode
 ├── quest-stories.js # 11 illustrated story scenes; Networking lives in guard.js
 ├── guard.js         # YouTube overlay, 30-minute quests, 5-minute story replays
 ├── popup.html       # Popup user interface
@@ -210,7 +233,8 @@ scrollsentinel/
 ├── popup.js         # Popup behavior and settings management
 ├── tests/
 │   ├── quest-stories.test.cjs # Dependency-free story and timing checks
-│   └── schedule.test.cjs      # 4-slot editing, overlap and time-selection checks
+│   ├── schedule.test.cjs      # 4-slot editing, overlap and time-selection checks
+│   └── video-break.test.cjs   # Video budget, break phases and integration checks
 ├── .github/workflows/
 │   └── quality.yml  # Automated GitHub Actions checks
 ├── README.md        # Documentation
@@ -234,7 +258,7 @@ node --test tests/*.test.cjs
 
 ## 🔍 Known limitations & testing
 
-This is an **early development version**, **not** a verified Mozilla Add-ons release. Automated JavaScript story checks are provided in `tests/quest-stories.test.cjs` (run with `node --test tests/quest-stories.test.cjs`), but **full Firefox/browser acceptance testing has not been completed**. Before relying on it, please test:
+The currently public **Mozilla Add-ons release is v2.5.3**, but **v2.7.0 is still a GitHub development version**. JavaScript source checks and automated tests run using `node --test tests/*.test.cjs`; **full real-browser acceptance testing on the four supported websites has not been completed**. Before submitting a new Mozilla release, verify:
 
 - Time transitions for default and custom schedules, including unchecked windows, boundaries touching without overlap, and overnight intervals.
 - Prevention of overlaps between any configured schedules (even unchecked ones), and preventing edits/deletes during Strict Mode.
@@ -243,6 +267,10 @@ This is an **early development version**, **not** a verified Mozilla Add-ons rel
 - Reset on the next local calendar day.
 - Strict Mode lock behavior, expiry, and Firefox restart behavior (using a signed install when available).
 - Multiple tabs, window focus, background audio/video and single-page YouTube navigation.
+- Break activation after 60 minutes combined active video across all four sites; play/pause and focused-tab counting.
+- Automatic pausing in videos and compatible iframes; trying to restart video during the 2-minute rest.
+- The village scene, face eye rotation, four 30-second stages, countdown, reduced-motion preference and narrow-screen layout.
+- Time continuing across refreshes, switching platforms, Firefox restarts and after two minutes have elapsed.
 - Whether the YouTube filters still work after interface updates.
 - All 12 visual stories at narrow and short viewport sizes, five-minute replay timing, reduced-motion preference, and tab visibility changes.
 
@@ -250,7 +278,7 @@ YouTube may change HTML selectors; the filters and autoplay reduction are best e
 
 ## 🛡️ Privacy
 
-Settings, lock information and approximate usage counters are stored **locally** in Firefox extension storage. This project does not implement user accounts, remote telemetry or an analytics backend. YouTube itself may still collect data when you browse its service. Review the code and permissions before installing.
+Settings, lock information, approximate YouTube usage and the cross-platform video watch/rest timers are stored **locally** in Firefox extension storage. This project does not implement user accounts, remote telemetry or an analytics backend. YouTube itself may still collect data when you browse its service. Review the code and permissions before installing.
 
 ## 🤖 AI assistance acknowledgment
 

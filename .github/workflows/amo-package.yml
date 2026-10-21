@@ -22,7 +22,7 @@ jobs:
           set -euo pipefail
           VERSION=$(python3 -c 'import json; print(json.load(open("manifest.json"))["version"])')
           FILE="scrollsentinel-v$VERSION-amo.zip"
-          zip -q "$FILE" manifest.json background.js quest-stories.js guard.js popup.html popup.js icons/scrollsentinel.svg LICENSE
+          zip -q "$FILE" manifest.json background.js quest-stories.js guard.js popup.html popup.js icons/scrollsentinel.svg icons/scrollsentinel-*.png LICENSE
           test "$(unzip -Z -1 "$FILE" | head -n 1)" = "manifest.json"
           unzip -t "$FILE"
           echo "FILE=$FILE" >> "$GITHUB_ENV"

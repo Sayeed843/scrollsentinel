@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** The Mozilla Add-ons Store has publicly approved **v2.5.3**. The newer **v2.5.4** source includes a PNG icon fix that is not available to Store users until Mozilla signs and publishes the new version. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** Mozilla has publicly approved **v2.5.3**. The GitHub source is now **v2.6.0**, including PNG icon support and a redesigned four-slot schedule editor. **v2.6.0 is not yet a Mozilla Store update**; it must be submitted as a new signed version.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -33,9 +33,26 @@ The application does not insert user-controlled strings or YouTube page data int
 
 Firefox's installed Add-ons Manager displayed the generic puzzle-piece icon even after the Store listing image was set. The original SVG is retained as a vector source, while size-matched **16, 32, 48, 64, 96 and 128 px PNG files** have been included. Both extension icons and toolbar action icons now reference PNG. Although Firefox supports SVG icons, using exact-size PNG images avoids SVG-specific rendering or packaging surprises.
 
-**Important:** The currently approved Mozilla release is v2.5.3. Publishing v2.5.4 to the Mozilla Add-ons Store as a **new version** is necessary before users receive this installed-icon update. Merely changing the listing icon does not update an installed extension.
+**Important:** The publicly approved Mozilla Store release is still v2.5.3. The PNG icon changes will reach Store users only when the newer v2.6.0 version is signed and published.
 
 [Official ScrollSentinel Mozilla Add-ons listing](https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/)
+
+## ⏰ Flexible YouTube Schedules (v2.6.0)
+
+The popup now allows **four schedule slots**: two built-in schedules and up to two user-created custom schedules.
+
+- **Original schedule 1:** 12:00–14:00 (selected by default). Its time may be edited, but the slot cannot be deleted.
+- **Original schedule 2:** 22:00–23:30 (selected by default). Its time may be edited, but the slot cannot be deleted.
+- **Custom schedules 3 and 4:** Click **+ Add schedule** to create an optional time interval. These slots can be edited, checked/unchecked, and deleted.
+- **Checkbox rule:** At least **two** and at most **three** schedules must be selected. The checkbox determines whether that interval allows YouTube access.
+- **No overlapping ranges:** All existing time intervals must be nonoverlapping, whether selected or not. The extension checks this on the popup and in the background before saving. Overnight ranges (such as 22:00–01:00) are supported, including overlap detection across midnight. Adjacent intervals such as 12:00–14:00 and 14:00–15:00 are permitted.
+- **Countdown:** The blocked screen lists **only selected** schedules and counts down to the next selected viewing window.
+- **Backward compatible:** Two-window settings saved by earlier ScrollSentinel versions carry over automatically with both original schedules selected.
+- **Strict Mode:** During an active 7- or 14-day lock, schedules cannot be added, removed, selected/deselected, or edited through the extension.
+
+**Important overlap example:** A new 17:00–20:30 schedule will be rejected if a configured 20:00–23:30 schedule already exists (even if unchecked). Edit the earlier schedule so its time no longer overlaps.
+
+All schedule times use the local device clock. The same daily time budget still applies across **all** selected windows.
 
 ## 🎬 Cybersecurity Learning Stories (12 animated quests)
 
@@ -70,7 +87,7 @@ Stories are educational analogies, **not precise simulations of networking proto
 
 | Feature | What it does | Important details |
 | --- | --- | --- |
-| ⏰ **Scheduled YouTube Access** | Allows YouTube only during the daily time windows you set and shows a blocking screen outside them. | Defaults: **12:00 PM–2:00 PM** and **10:00 PM–11:30 PM**, local computer time. Two windows are supported in the current popup. |
+| ⏰ **Scheduled YouTube Access** | Choose **2–3 active schedules** from two built-in (editable, undeletable) slots and up to two custom (removable) slots. | Built-in defaults: **12:00–14:00** and **22:00–23:30**. No overlap between any configured schedules, including unchecked ones. |
 | 🚫 **Automatic YouTube Blocker** | Covers YouTube pages with a blocking overlay whenever access is not allowed. | Applies to matching YouTube browser pages; **not** a system-wide block, and it does not block other browsers or apps. |
 | ⏳ **Daily Time Budget** | Stops access after your daily allowance is used, even during an allowed window. | Default: **90 minutes/day**; configurable between 1 and 1440 minutes. |
 | 📈 **Approximate Usage Tracking** | Displays today's estimated minutes used versus the daily limit. | Counts activity reported by a **focused, visible YouTube tab**. It is **not** exact video playback time; behavior with multiple tabs and background audio can vary. |
@@ -87,7 +104,7 @@ Stories are educational analogies, **not precise simulations of networking proto
 | 🌌 **Quest-Specific Animated Stories** | All 12 challenges have separate step-by-step visual stories and topic-matched backgrounds. | Each story replays every 5 minutes when its blocked tab is visible; respects reduced-motion preferences. |
 | 📐 **Responsive Blocking Screen** | Adjusts art, typography, spacing and content placement for narrow or short Firefox windows. | On extremely small windows, page scrolling remains available; respects reduced-motion preferences. |
 | 🎨 **Cybersecurity Training Screen** | Replaces the older cartoon guard with a cybersecurity-focused visual display and understated access countdown. | When the daily budget is exhausted, the access panel displays **TOMORROW**. |
-| 🛡️ **ScrollSentinel Shield Icon** | A shield surrounding stylized scrolling feed lines and a lock identifies the extension in Firefox without using another platform's branding. | Lightweight SVG asset in `icons/scrollsentinel.svg`. |
+| 🛡️ **ScrollSentinel Shield Icon** | A shield surrounding stylized scrolling feed lines and a lock identifies ScrollSentinel. | PNG icons in six sizes for Firefox and retained SVG source in `icons/scrollsentinel.svg`. |
 | 🧩 **Firefox Toolbar Popup** | Shows access status, time used, viewing windows, daily limit, filter switch and Strict Mode controls. | Settings are saved with **Save settings**. |
 | 🔐 **Local-Only Settings** | Stores the schedule, lock expiration and estimated usage in Firefox's extension storage. | No external analytics server is used by the extension. |
 
@@ -169,7 +186,7 @@ web-ext build
 ## ⚙️ Settings quick start
 
 1. Toggle **Enable blocking** on.
-2. Set the first and second allowed viewing windows (or leave the defaults).
+2. Edit either built-in viewing schedule if needed, and optionally add up to two removable custom schedules. Check **2 or 3** schedules to activate them, and adjust any overlapping time ranges before saving.
 3. Choose the **daily minute limit** (default: 90).
 4. Enable **Distraction-Free YouTube** if you want to reduce recommendations, comments and suggested videos.
 5. For Strict Mode, choose **No lock**, **7 days**, or **14 days**.
@@ -182,7 +199,8 @@ web-ext build
 ```text
 scrollsentinel/
 ├── manifest.json    # ScrollSentinel metadata and permissions
-├── background.js    # Time windows, usage budget, local state and Strict Mode
+├── schedule.js      # Shared 2–3-selection and nonoverlapping time validation
+├── background.js    # Active schedule enforcement, usage budget and Strict Mode
 ├── quest-stories.js # 11 illustrated story scenes; Networking lives in guard.js
 ├── guard.js         # YouTube overlay, 30-minute quests, 5-minute story replays
 ├── popup.html       # Popup user interface
@@ -191,7 +209,8 @@ scrollsentinel/
 │   └── scrollsentinel-{16,32,48,64,96,128}.png # Browser icons
 ├── popup.js         # Popup behavior and settings management
 ├── tests/
-│   └── quest-stories.test.cjs # Dependency-free story and timing checks
+│   ├── quest-stories.test.cjs # Dependency-free story and timing checks
+│   └── schedule.test.cjs      # 4-slot editing, overlap and time-selection checks
 ├── .github/workflows/
 │   └── quality.yml  # Automated GitHub Actions checks
 ├── README.md        # Documentation
@@ -208,7 +227,7 @@ GitHub Actions validates JavaScript syntax and runs the dependency-free Node tes
 To run the same story tests locally (requires Node.js):
 
 ```bash
-node --test tests/quest-stories.test.cjs
+node --test tests/*.test.cjs
 ```
 
 **These are source-level tests, not a substitute for testing the extension in a live Firefox session.**
@@ -217,7 +236,9 @@ node --test tests/quest-stories.test.cjs
 
 This is an **early development version**, **not** a verified Mozilla Add-ons release. Automated JavaScript story checks are provided in `tests/quest-stories.test.cjs` (run with `node --test tests/quest-stories.test.cjs`), but **full Firefox/browser acceptance testing has not been completed**. Before relying on it, please test:
 
-- Time transitions at **12:00**, **14:00**, **22:00**, and **23:30** in your local time zone.
+- Time transitions for default and custom schedules, including unchecked windows, boundaries touching without overlap, and overnight intervals.
+- Prevention of overlaps between any configured schedules (even unchecked ones), and preventing edits/deletes during Strict Mode.
+- Editing both original schedules without the possibility to delete them, deleting optional custom schedules, 2–3 selected checkboxes, and migrating v2.5.3 settings.
 - Budget consumption and blocking when the 90-minute limit is reached.
 - Reset on the next local calendar day.
 - Strict Mode lock behavior, expiry, and Firefox restart behavior (using a signed install when available).

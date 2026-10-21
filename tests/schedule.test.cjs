@@ -90,7 +90,7 @@ test("countdown uses only checked schedules", () => {
 
 test("manifest and UI load the shared schedule script in the right order", () => {
   const manifest = JSON.parse(read("manifest.json"));
-  assert.deepEqual(manifest.background.scripts, ["schedule.js","background.js"]);
+  assert.deepEqual(manifest.background.scripts, ["schedule.js","break-core.js","background.js"]);
   assert.deepEqual(manifest.content_scripts[0].js, ["schedule.js","quest-stories.js","guard.js"]);
   const popup = read("popup.html");
   assert.ok(popup.indexOf('src="schedule.js"') < popup.indexOf('src="popup.js"'));

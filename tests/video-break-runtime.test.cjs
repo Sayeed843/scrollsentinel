@@ -125,3 +125,14 @@ test("Instagram, Facebook, TikTok and YouTube are all accepted by the same count
     assert.equal(result.watchedSeconds,76,url);
   }
 });
+
+test("two-minute rest does not consume YouTube's separate daily browsing time",async()=>{
+  const now = Date.UTC(2026,9,22,12,30,0);
+  const e = await environment({
+    now,enabled:true,watched:3600,restUntil:now+60000,
+    url:"https://www.youtube.com/watch?v=123"
+  });
+  const status=await e.send("activity","https://www.youtube.com/watch?v=123");
+  assert.equal(status.usedSeconds,0);
+  assert.equal(e.storage.usedSeconds,0);
+});

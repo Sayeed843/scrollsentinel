@@ -140,10 +140,15 @@ test("quest rotates every 30 minutes, each story replays every 5 minutes", () =>
   assert.match(guard, /setInterval\(replayCurrentQuestStory,\s*1000\)/);
 });
 
-test("the extension still targets YouTube only in this release", () => {
+test("YouTube schedule guard remains limited to YouTube; other sites get only wellness breaks", () => {
   const manifest = JSON.parse(read("manifest.json"));
   assert.ok(manifest.content_scripts[0].matches.every(s => /youtube\.com|youtu\.be/.test(s)));
-  assert.ok(manifest.host_permissions.every(s => /youtube\.com|youtu\.be/.test(s)));
+  assert.ok(manifest.content_scripts[0].js.includes("guard.js"));
+  const otherSites = manifest.content_scripts.filter(s => s.js.includes("break.js"));
+  assert.equal(otherSites.length, 1);
+  assert.ok(otherSites[0].matches.some(s => /facebook\.com/.test(s)));
+  assert.ok(otherSites[0].matches.some(s => /instagram\.com/.test(s)));
+  assert.ok(otherSites[0].matches.some(s => /tiktok\.com/.test(s)));
 });
 
 test("Firefox extension and toolbar icons use correctly sized PNG assets", () => {

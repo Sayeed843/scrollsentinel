@@ -23,6 +23,9 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           node --check schedule.js
+          node --check break-core.js
+          node --check break-visual.js
+          node --check break.js
           node --check background.js
           node --check popup.js
           node --check quest-stories.js

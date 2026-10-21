@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "ScrollSentinel",
-  "version": "2.6.0",
-  "description": "Focus on YouTube today: scheduled access, daily limits, Strict Mode and cybersecurity learning quests. More platforms planned.",
+  "version": "2.7.0",
+  "description": "YouTube schedules and focus limits, plus a 2-minute wellness break after 60 minutes of video across YouTube, Facebook, Instagram and TikTok.",
   "icons": {
     "16": "icons/scrollsentinel-16.png",
     "32": "icons/scrollsentinel-32.png",
@@ -19,11 +19,20 @@
   "host_permissions": [
     "*://youtube.com/*",
     "*://*.youtube.com/*",
-    "*://youtu.be/*"
+    "*://youtu.be/*",
+    "*://facebook.com/*",
+    "*://*.facebook.com/*",
+    "*://fb.watch/*",
+    "*://*.fb.watch/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*",
+    "*://tiktok.com/*",
+    "*://*.tiktok.com/*"
   ],
   "background": {
     "scripts": [
       "schedule.js",
+      "break-core.js",
       "background.js"
     ]
   },
@@ -50,6 +59,28 @@
         "guard.js"
       ],
       "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://youtube.com/*",
+        "*://*.youtube.com/*",
+        "*://youtu.be/*",
+        "*://facebook.com/*",
+        "*://*.facebook.com/*",
+        "*://fb.watch/*",
+        "*://*.fb.watch/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*",
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*"
+      ],
+      "js": [
+        "break-core.js",
+        "break-visual.js",
+        "break.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
   "browser_specific_settings": {

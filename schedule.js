@@ -1,6 +1,8 @@
 /* ScrollSentinel daily schedule model.
  * Compatible with saved two-window settings from previous releases.
- * Selected: min 2, max 3. Available slots: two original + up to two custom.
+ * Selected: min 2, max 3. The first two slots cannot be deleted.
+ * Every slot can be edited; optional custom slots can be removed.
+ * Every configured range must be nonoverlapping (even when unchecked).
  * Uses the device's local time, just as earlier versions did.
  */
 (() => {
@@ -29,25 +31,45 @@
   const activeWindows = windows =>
     normalizeWindows(windows).filter(w => w.selected);
   const selectedCount = windows => activeWindows(windows).length;
-  const completeWindow = w => validTime(w.start) && validTime(w.end) && w.start !== w.end;
+  const completeWindow = w =>
+    Boolean(w && validTime(w.start) && validTime(w.end) && w.start !== w.end);
 
+  // Overnight ranges split at midnight. Endpoints are exclusive, so two
+  // schedules may meet at 14:00 without counting as overlapping.
+  function segments(window) {
+    const start = minute(window.start), end = minute(window.end);
+    return start < end ? [[start, end]] : [[start, 1440], [0, end]];
+  }
+  function overlaps(left, right) {
+    if (!completeWindow(left) || !completeWindow(right)) return false;
+    return segments(left).some(([a,b]) =>
+      segments(right).some(([c,d]) => a < d && c < b));
+  }
   function validateWindows(windows) {
     if (!Array.isArray(windows) || windows.length < 2 || windows.length > 4) {
-      return 'Use the two original schedules and optionally add up to two more.';
+      return 'Keep the 2 original schedules; you may add up to 2 more.';
     }
     for (let i = 0; i < windows.length; i++) {
       const w = windows[i];
       if (!w || typeof w.selected !== 'boolean') {
         return 'Invalid selection in schedule ' + (i + 1) + '.';
       }
-      if (!w.start && !w.end && !w.selected) continue; // New, unconfigured custom slot.
       if (!completeWindow(w)) {
-        return 'Set a valid start and end time for schedule ' + (i + 1) +
-          ' (start and end must differ).';
+        return 'Set valid and different start/end times for schedule ' + (i + 1) + '.';
+      }
+    }
+    for (let i = 0; i < windows.length; i++) {
+      for (let j = i + 1; j < windows.length; j++) {
+        if (overlaps(windows[i], windows[j])) {
+          return 'Schedule ' + (i + 1) + ' overlaps schedule ' + (j + 1) +
+            '. Change their times to avoid overlap.';
+        }
       }
     }
     const count = windows.filter(w => w.selected).length;
-    if (count < 2 || count > 3) return 'Select at least 2 and no more than 3 schedules.';
+    if (count < 2 || count > 3) {
+      return 'Select at least 2 and no more than 3 schedules.';
+    }
     return null;
   }
   const inside = (window, minutes) => {
@@ -71,6 +93,6 @@
   globalThis.ScrollSentinelSchedule = Object.freeze({
     defaults: defaults.map(w => ({...w})),
     validTime, normalizeWindows, activeWindows, selectedCount,
-    validateWindows, scheduleAllows, nextStartSeconds, inside
+    validateWindows, overlaps, scheduleAllows, nextStartSeconds, inside
   });
 })();

@@ -22,9 +22,10 @@ jobs:
           node-version: "22"
       - name: Check JavaScript syntax
         run: |
+          node --check schedule.js
           node --check background.js
           node --check popup.js
           node --check quest-stories.js
           node --check guard.js
       - name: Run story and manifest tests
-        run: node --test tests/quest-stories.test.cjs
+        run: node --test tests/*.test.cjs

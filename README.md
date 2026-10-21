@@ -6,7 +6,7 @@
 
 ScrollSentinel currently protects **YouTube only**, combining scheduled access, an estimated daily browsing-time limit, 7- or 14-day Strict Mode, and a Distraction-Free YouTube view with 30-minute cybersecurity quests. It is open source and stores its settings locally.
 
-> **Project status:** Development prototype (v2.5.3), newly renamed from **YouTube Focus Hours**. The code is on GitHub, but **no Mozilla-signed public or unlisted release has been published yet**. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
+> **Project status:** The Mozilla Add-ons Store has publicly approved **v2.5.3**. The newer **v2.5.4** source includes a PNG icon fix that is not available to Store users until Mozilla signs and publishes the new version. See [Installation](#-installation) for what works now and how permanent installation will work after signing.
 
 ## 🌍 Supported platforms — current vs planned
 
@@ -28,6 +28,14 @@ ScrollSentinel currently protects **YouTube only**, combining scheduled access, 
 The initial Mozilla validation of v2.5.2 succeeded with two `Unsafe assignment to innerHTML` warnings, one in `guard.js` and one in `quest-stories.js`. Version **2.5.3** removes all `innerHTML` assignments and instead parses **extension-owned, fixed** UI/story markup into an inert document before importing its DOM nodes.
 
 The application does not insert user-controlled strings or YouTube page data into these templates. The tests now enforce that no `innerHTML` writes are reintroduced. Revalidate **the new ZIP** on Mozilla Add-ons; passing the project tests is not a guarantee that AMO has no other warnings.
+
+### Firefox icon compatibility update (v2.5.4)
+
+Firefox's installed Add-ons Manager displayed the generic puzzle-piece icon even after the Store listing image was set. The original SVG is retained as a vector source, while size-matched **16, 32, 48, 64, 96 and 128 px PNG files** have been included. Both extension icons and toolbar action icons now reference PNG. Although Firefox supports SVG icons, using exact-size PNG images avoids SVG-specific rendering or packaging surprises.
+
+**Important:** The currently approved Mozilla release is v2.5.3. Publishing v2.5.4 to the Mozilla Add-ons Store as a **new version** is necessary before users receive this installed-icon update. Merely changing the listing icon does not update an installed extension.
+
+[Official ScrollSentinel Mozilla Add-ons listing](https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/)
 
 ## 🎬 Cybersecurity Learning Stories (12 animated quests)
 
@@ -179,7 +187,8 @@ scrollsentinel/
 ├── guard.js         # YouTube overlay, 30-minute quests, 5-minute story replays
 ├── popup.html       # Popup user interface
 ├── icons/
-│   └── scrollsentinel.svg # Shield + scroll + lock icon
+│   ├── scrollsentinel.svg # Original vector source
+│   └── scrollsentinel-{16,32,48,64,96,128}.png # Browser icons
 ├── popup.js         # Popup behavior and settings management
 ├── tests/
 │   └── quest-stories.test.cjs # Dependency-free story and timing checks

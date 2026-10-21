@@ -42,6 +42,8 @@ api.runtime.onMessage.addListener((msg,sender)=>{
  if(msg.type!=='activity'||!sender.tab?.id)return undefined;
  return serialized(async()=>{
   const s=await load();if(!s.enabled||!scheduleAllows(s)||s.usedSeconds>=s.dailyLimit*60)return status(s);
+  // The mandatory 2-minute wellness rest must not consume daily browsing time.
+  if ((await videoBreakState()).restUntilMs) return status(s);
   const active=await api.tabs.query({active:true,lastFocusedWindow:true});
   if(!active.some(t=>t.id===sender.tab.id&&isYoutube(t.url)))return status(s);
   const now=Date.now();if(now-lastTick<900)return status(s);lastTick=now;

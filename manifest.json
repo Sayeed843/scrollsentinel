@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ScrollSentinel",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "description": "YouTube schedules and focus limits, plus a 2-minute wellness break after 60 minutes of video across YouTube, Facebook, Instagram and TikTok.",
   "icons": {
     "16": "icons/scrollsentinel-16.png",
@@ -92,5 +92,9 @@
         ]
       }
     }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   }
 }

@@ -106,9 +106,12 @@ test("screen break pauses and does not restart video",()=>{
 });
 test("popup and Mozilla package include visible Screen Break status",()=>{
   const html=read("popup.html");
-  assert.match(html,/id="wellness-status"/);
-  assert.match(html,/TikTok/);
+  assert.match(html,/id="break-min"/);
+  assert.match(html,/id="break-bar"/);
+  assert.match(read("options.html"),/TikTok/);
+  assert.match(read("options.html"),/id="wellness-status"/);
   assert.match(read("popup.js"),/type:'videoBreakStatus'/);
+  assert.match(read("options.js"),/type:'videoBreakStatus'/);
   const packageWorkflow=read(".github/workflows/amo-package.yml");
   for(const entry of ["break-core.js","break-visual.js","break.js"]){
     assert.ok(packageWorkflow.includes(entry),entry);

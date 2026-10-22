@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ScrollSentinel · Settings</title>
+<style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+html{min-height:100%;background:#081523}
+body{margin:0;min-height:100vh;color:#e9f5ff;
+font:14px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+background:radial-gradient(ellipse 65% 38% at 90% 0%,#17485a70,transparent 80%),
+radial-gradient(ellipse 40% 50% at 0% 100%,#173c5970,transparent 75%),#081523}
+input,select,button{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #62cffa;outline-offset:3px}
+input[type=checkbox]{accent-color:#56d8b3;width:17px;height:17px;margin:0;flex:none}
+input:disabled,select:disabled,button:disabled{opacity:.53;cursor:not-allowed}
+.page{width:min(1080px,calc(100% - 36px));margin:0 auto;padding:29px 0 66px}
+.top{display:flex;align-items:center;gap:14px}
+.logo{width:56px;height:56px;border-radius:14px}
+.brand-title{font-size:25px;font-weight:850;letter-spacing:-.5px;line-height:1.1;margin:0}
+.brand-sub{margin:3px 0 0;color:#a3c5d7;font-size:12px;letter-spacing:1.1px;text-transform:uppercase;font-weight:750}
+.version{margin-left:auto;background:#112e43;color:#a5ebf5;border:1px solid #3b657e;
+font-size:12px;font-weight:800;padding:5px 10px;border-radius:20px}
+.hero{margin:29px 0 19px}
+h1{font-size:clamp(25px,3.4vw,36px);line-height:1.17;margin:0 0 8px;letter-spacing:-.6px}
+.subtitle{color:#adc7d9;font-size:14px;max-width:720px;margin:0}
+.overview{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.overview-item{border:1px solid #2d4f67;background:#112b40;padding:7px 12px;
+border-radius:10px;font-size:12px;font-weight:750;color:#c0e4f4}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.95fr);gap:19px;align-items:start}
+.panel{background:#10263b;border:1px solid #2b4c64;border-radius:19px;
+box-shadow:0 14px 43px #00000020;padding:23px;min-width:0}
+.panel + .panel{margin-top:16px}
+.panel-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+h2{font-size:19px;line-height:1.25;margin:0;letter-spacing:-.2px}
+h3{font-size:15px;margin:0;font-weight:800}
+.subheading{font-size:12px;color:#a5c2d2;line-height:1.55;margin:7px 0 0}
+.tag{flex:none;border:1px solid #35748b;color:#8eddeb;border-radius:20px;
+font-size:11px;font-weight:800;padding:4px 9px;white-space:nowrap}
+.schedule-list{display:grid;gap:11px;margin:20px 0 15px}
+.schedule-card{display:grid;grid-template-columns:minmax(155px,.8fr) minmax(240px,1.2fr);
+align-items:center;gap:16px;padding:15px;background:#0b2034;
+border:1px solid #34536a;border-radius:13px;min-width:0}
+.schedule-card.unselected{background:#102439;border-color:#354b60}
+.schedule-meta{display:flex;flex-direction:column;gap:8px;min-width:0}
+.schedule-title{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:800;cursor:pointer}
+.schedule-number{background:#203e57;color:#bfefff;width:27px;height:27px;
+border-radius:9px;display:inline-grid;place-items:center;font-variant-numeric:tabular-nums;font-size:12px}
+.schedule-origin{font-size:11px;color:#a7c7d8}
+.delete{align-self:flex-start;border:1px solid #865167;border-radius:8px;padding:5px 9px;
+color:#ffc8d5;background:#3c2131;font-size:11px;font-weight:850}
+.delete:hover:not(:disabled){background:#6b2f49}
+.time-group{display:grid;grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr);gap:8px;align-items:end}
+.time-label{display:grid;gap:5px;min-width:0;font-size:11px;color:#a6c7d8;font-weight:750}
+.time-label input{width:100%;min-width:0;padding:10px 10px;border-radius:8px;
+background:#f3faff;border:1px solid #8bb4cb;color:#102436;letter-spacing:1px;
+font-variant-numeric:tabular-nums;font-size:14px;font-weight:700}
+.time-arrow{padding-bottom:13px;text-align:center;color:#77b9d5}
+.add-row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.small{font-size:12px;color:#93b8cb}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:10px;
+border:1px solid #417b94;background:#183f56;color:#dcf5ff;padding:9px 13px;
+font-weight:800;font-size:13px}
+.btn:hover:not(:disabled){background:#24637f}
+.btn-add{border:1px solid #4db9af;background:#174945;color:#c6fff0}
+.btn-add:hover:not(:disabled){background:#1d6355}
+.rules{background:#102f41;border:1px solid #2c6577;border-radius:11px;padding:11px 13px;
+font-size:12px;color:#bee6ec;line-height:1.6;margin:16px 0 12px}
+.validation{margin:8px 0 0;color:#ffc0cb;font-size:12px;line-height:1.45;min-height:18px}
+.validation.good{color:#8fe5b9}
+.side{display:grid;gap:18px}
+.info-row{display:flex;align-items:center;justify-content:space-between;gap:11px;margin:13px 0}
+.field{margin:15px 0}
+.field-label{display:block;font-size:12px;font-weight:800;color:#c9e6f4;margin-bottom:7px}
+.field-help{font-size:11px;color:#95b5c6;margin-top:6px}
+.number-box{display:flex;align-items:center;gap:9px}
+.number-box input,.field select{color:#0c2033;background:#f3faff;padding:9px 11px;
+border:1px solid #91b6c8;border-radius:9px;min-height:40px}
+.number-box input{width:100px}
+.field select{width:100%;max-width:260px}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;
+cursor:pointer;padding:7px 0}
+.toggle-title{font-weight:800;font-size:13px}
+.toggle-sub{color:#9ebacc;font-size:11px;line-height:1.4}
+.divider{height:1px;background:#2b4a60;margin:16px 0}
+.break-meter{height:8px;background:#071727;border-radius:20px;overflow:hidden;margin-top:10px}
+.break-meter-fill{height:100%;width:0;background:linear-gradient(90deg,#41b6ce,#76e5b7);border-radius:20px}
+.break-status{font-size:14px;font-weight:750;color:#b4f2dc;margin:9px 0 0}
+.notice{font-size:12px;color:#bcd0db;line-height:1.65;margin:10px 0 0}
+.consent{margin-top:13px;padding:12px 13px;border-radius:11px;
+border:1px solid #a77955;background:#413021;color:#ffe7c3}
+.consent label{display:flex;align-items:flex-start;gap:10px;font-size:12px;
+font-weight:750;cursor:pointer;line-height:1.55}
+.consent input{margin-top:2px}
+.lock-status{font-size:12px;color:#97e3c8;margin:12px 0 0}
+.save-footer{position:sticky;bottom:10px;display:flex;gap:13px;align-items:center;
+justify-content:space-between;min-width:0;margin-top:22px;padding:13px 15px;
+background:#0c283cf0;border:1px solid #386b82;border-radius:13px;backdrop-filter:blur(10px)}
+.save-message{font-size:12px;color:#ffc7d1;line-height:1.45;min-width:0}
+.save-message.good{color:#91ecc4}
+.btn-save{background:linear-gradient(100deg,#158ea9,#0d6b96);color:white;border-color:#1da8cb;
+min-width:155px;padding:11px 15px}
+.btn-save:hover:not(:disabled){background:linear-gradient(100deg,#1da7c0,#1988ad)}
+.endnote{font-size:11px;color:#819eaf;margin:14px 2px}
+.hidden{display:none!important}
+@media(max-width:880px){.layout{grid-template-columns:minmax(0,1fr)}.side{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}.panel{padding:19px}}
+@media(max-width:620px){.page{width:min(100% - 24px,500px);padding:19px 0 40px}.logo{width:46px;height:46px}
+.brand-title{font-size:21px}.side{grid-template-columns:minmax(0,1fr)}.panel{padding:17px}
+.schedule-card{grid-template-columns:minmax(0,1fr);gap:10px}
+.schedule-meta{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.time-group{grid-template-columns:minmax(0,1fr) 12px minmax(0,1fr)}
+.save-footer{padding:11px}.btn-save{min-width:128px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="page">
+<header class="top">
+<img class="logo" src="icons/scrollsentinel-64.png" width="56" height="56" alt="ScrollSentinel logo">
+<div><p class="brand-title">ScrollSentinel</p><p class="brand-sub">Advanced focus settings</p></div>
+<span class="version">v2.8.0</span>
+</header>
+<section class="hero">
+<h1>Your time, your rules.</h1>
+<p class="subtitle">Create your YouTube access windows, build better viewing habits, and keep a healthy screen-break routine. Changes are saved only when you choose <strong>Save changes</strong>.</p>
+<div class="overview">
+<span id="status" class="overview-item">Checking YouTube status…</span>
+<span id="usage" class="overview-item">Checking daily usage…</span>
+<span class="overview-item">🔐 Local-only settings</span>
+</div>
+</section>
+<div class="layout">
+<section class="panel" aria-labelledby="schedule-title">
+<div class="panel-heading"><div>
+<h2 id="schedule-title">⏰ YouTube viewing schedules</h2>
+<p class="subheading">Your first two schedules are permanent slots, but their times are editable. You can add or delete two custom slots.</p>
+</div><span class="tag">2–3 selected</span></div>
+<div id="schedule-list" class="schedule-list" aria-live="off"></div>
+<div class="add-row">
+<span id="selection-count" class="small" aria-live="polite">Loading schedules…</span>
+<button type="button" id="add-schedule" class="btn btn-add">+ Add custom schedule</button>
+</div>
+<div class="rules">
+<strong>Schedule rules:</strong> Select at least <strong>2</strong> and at most <strong>3</strong>. No schedules may overlap—even unchecked ones. Adjacent times are fine. Use <strong>24-hour HH:MM</strong>, for example <strong>17:00</strong>.
+</div>
+<p id="schedule-error" class="validation" role="status" aria-live="polite"></p>
+</section>
+<div class="side">
+<section class="panel" aria-labelledby="youtube-settings-title">
+<h2 id="youtube-settings-title">🎯 Focus controls</h2>
+<p class="subheading">Applies to YouTube only. Facebook, Instagram and TikTok currently use the screen-break feature, not these schedules.</p>
+<div class="field">
+<label class="toggle" for="enabled"><span><span class="toggle-title">YouTube schedule protection</span><span class="toggle-sub">Block YouTube outside selected windows</span></span>
+<input type="checkbox" id="enabled"></label>
+</div>
+<div class="divider"></div>
+<div class="field">
+<label class="field-label" for="dailyLimit">Daily YouTube browsing budget</label>
+<div class="number-box"><input type="number" min="1" max="1440" step="1" id="dailyLimit"><span>minutes per day</span></div>
+<p class="field-help">Default: 90 minutes. Tracked approximately in focused YouTube tabs.</p>
+</div>
+<label class="toggle" for="distractionFree">
+<span><span class="toggle-title">Distraction-Free YouTube</span><span class="toggle-sub">Hide selected recommendations and comments</span></span>
+<input type="checkbox" id="distractionFree">
+</label>
+<div class="divider"></div>
+<div class="field">
+<label class="field-label" for="lockDays">Strict Mode</label>
+<select id="lockDays">
+<option value="0">Off — no new lock</option>
+<option value="7">Lock settings for 7 days</option>
+<option value="14">Lock settings for 14 days</option>
+</select>
+<p class="field-help">Locks settings inside ScrollSentinel only; Firefox can still disable or uninstall the extension.</p>
+</div>
+<div id="lock-consent-row" class="consent hidden">
+<label for="lock-consent"><input type="checkbox" id="lock-consent">
+<span>I understand that choosing Strict Mode locks all ScrollSentinel settings for the selected period, including schedule editing.</span></label>
+</div>
+<p id="lockStatus" class="lock-status" role="status">Checking Strict Mode…</p>
+</section>
+<section class="panel" aria-labelledby="wellness-title">
+<h2 id="wellness-title">🌿 Your screen-break routine</h2>
+<p class="subheading">A shared hour of active video playback across YouTube, Facebook, Instagram and TikTok triggers a two-minute break.</p>
+<p id="wellness-status" class="break-status" role="status">Checking video timer…</p>
+<div class="break-meter" aria-hidden="true"><div id="wellness-bar" class="break-meter-fill"></div></div>
+<p class="notice">30 seconds of gentle eye movement → 30 seconds breathing → 30 seconds walking → 30 seconds breathing. Videos stay paused until you start them again.</p>
+</section>
+</div>
+</div>
+<div class="save-footer">
+<span id="save-feedback" class="save-message" role="status" aria-live="polite">Changes are not saved until you press Save.</span>
+<button id="save" type="button" class="btn btn-save">Save changes</button>
+</div>
+<p class="endnote">ScrollSentinel is not a tamper-proof blocker. Settings and approximate usage counters are stored locally in your Firefox profile.</p>
+</main>
+<script src="schedule.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

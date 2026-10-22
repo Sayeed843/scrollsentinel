@@ -6,7 +6,7 @@
 
 ScrollSentinel provides **scheduled blocking and focus controls for YouTube**, plus a shared **60-minute video-watching / 2-minute wellness-break cycle** across YouTube, Facebook, Instagram and TikTok (in Firefox Desktop). The app also includes 12 illustrated cybersecurity quests. All settings and approximate usage counters stay on your device.
 
-> **Release status:** The Mozilla Store currently has publicly approved **v2.5.3**. The GitHub source is now **v2.7.0**, including PNG icons, configurable YouTube schedules and the new **four-platform video wellness break**. Users on the Store version will **not** receive these changes until v2.7.0 is submitted, signed and published.
+> **Release status:** The Mozilla Store currently has publicly approved **v2.5.3**. The GitHub source is now **v2.8.0**, with PNG icons, configurable YouTube schedules, the four-platform video wellness break, and a **redesigned compact popup plus a full-tab Settings page**. Store users do **not** get these changes until v2.8.0 is submitted, signed and published.
 
 ## 🌍 Platform support — v2.7.0 development version
 
@@ -33,7 +33,7 @@ The application does not insert user-controlled strings or YouTube page data int
 
 Firefox's installed Add-ons Manager displayed the generic puzzle-piece icon even after the Store listing image was set. The original SVG is retained as a vector source, while size-matched **16, 32, 48, 64, 96 and 128 px PNG files** have been included. Both extension icons and toolbar action icons now reference PNG. Although Firefox supports SVG icons, using exact-size PNG images avoids SVG-specific rendering or packaging surprises.
 
-**Important:** The publicly approved Mozilla Store release is still v2.5.3. The PNG icon changes will reach Store users only when the newer v2.7.0 version is signed and published.
+**Important:** The publicly approved Mozilla Store release is still v2.5.3. The PNG icon changes will reach Store users only when the newer v2.8.0 version is signed and published.
 
 [Official ScrollSentinel Mozilla Add-ons listing](https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/)
 
@@ -60,7 +60,7 @@ After **60 minutes of observed, foreground video playback across YouTube, Facebo
 
 To preview the meadow and all four timed stages without watching an hour of video:
 
-1. Temporarily load the **v2.7.0 development** extension using Firefox `about:debugging#/runtime/this-firefox`. Select **Inspect** for the extension's background script to open its debugger console.
+1. Temporarily load the **v2.8.0 development** extension using Firefox `about:debugging#/runtime/this-firefox`. Select **Inspect** for the extension's background script to open its debugger console.
 2. In that **extension background console** (not in a website's console), execute:
 
 ```js
@@ -82,15 +82,30 @@ await browser.storage.local.set({
 
 5. Refresh the test tab. **Do not use this developer test shortcut as normal production behavior**; it is only for testing. Users can also disable an extension or clear its storage, so the rest is not tamper-proof.
 
+## 🎛️ Popup & Full-Tab Settings Redesign (v2.8.0)
+
+The browser-toolbar popup is intentionally small and designed not to cut off controls on ordinary laptop displays. It shows **YouTube access status**, today's browsing-time usage, minutes until the next four-site video wellness break, compact chips for the **selected viewing schedules**, two auto-saving quick toggles and a button to open the full editor.
+
+**Advanced schedules & settings** opens `options.html` in its own Firefox tab. The page provides:
+
+- All **two permanent editable schedules** and **up to two removable custom schedules**.
+- Checkbox selection for **2–3 active schedules** and live overlap detection, including unchecked/overnight ranges.
+- **24-hour HH:MM** text fields in a roomy responsive layout, avoiding squeezed native time pickers with AM/PM labels.
+- Separate YouTube daily budget, Distraction-Free toggle, Strict Mode and four-site screen-break status.
+- An **inline Strict Mode acknowledgment checkbox** before saving a 7- or 14-day lock. There are no browser `confirm()` dialogs within the popup.
+- Read-only Settings and disabled popup quick toggles while Strict Mode is active. The background continues to enforce the lock independently of the UI.
+
+**Important:** Changes in the full editor are saved only when **Save changes** is pressed; quick toggles in the compact popup save immediately. Settings remain local to Firefox. <u>Browser-level visual acceptance testing should still be performed before publishing this development version to Mozilla.</u>
+
 ## ⏰ Flexible YouTube Schedules (v2.6.0)
 
-The popup now allows **four schedule slots**: two built-in schedules and up to two user-created custom schedules.
+The **full Settings tab** allows four schedule slots: two built-in schedules and up to two user-created custom schedules. The small toolbar popup only summarizes selected windows.
 
 - **Original schedule 1:** 12:00–14:00 (selected by default). Its time may be edited, but the slot cannot be deleted.
 - **Original schedule 2:** 22:00–23:30 (selected by default). Its time may be edited, but the slot cannot be deleted.
 - **Custom schedules 3 and 4:** Click **+ Add schedule** to create an optional time interval. These slots can be edited, checked/unchecked, and deleted.
 - **Checkbox rule:** At least **two** and at most **three** schedules must be selected. The checkbox determines whether that interval allows YouTube access.
-- **No overlapping ranges:** All existing time intervals must be nonoverlapping, whether selected or not. The extension checks this on the popup and in the background before saving. Overnight ranges (such as 22:00–01:00) are supported, including overlap detection across midnight. Adjacent intervals such as 12:00–14:00 and 14:00–15:00 are permitted.
+- **No overlapping ranges:** All existing time intervals must be nonoverlapping, whether selected or not. The extension checks this in the full Settings editor and again in the background before saving. Overnight ranges (such as 22:00–01:00) are supported, including overlap detection across midnight. Adjacent intervals such as 12:00–14:00 and 14:00–15:00 are permitted.
 - **Countdown:** The blocked screen lists **only selected** schedules and counts down to the next selected viewing window.
 - **Backward compatible:** Two-window settings saved by earlier ScrollSentinel versions carry over automatically with both original schedules selected.
 - **Strict Mode:** During an active 7- or 14-day lock, schedules cannot be added, removed, selected/deselected, or edited through the extension.
@@ -151,7 +166,8 @@ Stories are educational analogies, **not precise simulations of networking proto
 | 📐 **Responsive Blocking Screen** | Adjusts art, typography, spacing and content placement for narrow or short Firefox windows. | On extremely small windows, page scrolling remains available; respects reduced-motion preferences. |
 | 🎨 **Cybersecurity Training Screen** | Replaces the older cartoon guard with a cybersecurity-focused visual display and understated access countdown. | When the daily budget is exhausted, the access panel displays **TOMORROW**. |
 | 🛡️ **ScrollSentinel Shield Icon** | A shield surrounding stylized scrolling feed lines and a lock identifies ScrollSentinel. | PNG icons in six sizes for Firefox and retained SVG source in `icons/scrollsentinel.svg`. |
-| 🧩 **Firefox Toolbar Popup** | Shows access status, time used, viewing windows, daily limit, filter switch and Strict Mode controls. | Settings are saved with **Save settings**. |
+| 🧩 **Compact Firefox Toolbar Popup** | Shows focus status, today's usage, screen-break countdown and selected viewing windows, with quick YouTube protection and Distraction-Free toggles. | Quick controls save immediately unless Strict Mode is active. Choose **Advanced schedules & settings** for the full editor. |
+| ⚙️ **Full-Tab Settings Editor** | Edit or delete custom schedules, manage all four time slots, daily limit and Strict Mode in a spacious responsive layout. | Native AM/PM time picker replaced with 24-hour HH:MM fields. Strict Mode requires **inline acknowledgment**, no nested popup confirmation dialog. |
 | 🔐 **Local-Only Settings** | Stores the schedule, lock expiration and estimated usage in Firefox's extension storage. | No external analytics server is used by the extension. |
 
 ### Example daily schedule
@@ -185,7 +201,7 @@ Strict Mode prevents changes **through this extension's interface** until the ch
 3. In Firefox, enter **`about:debugging#/runtime/this-firefox`** in the address bar.
 4. Click **Load Temporary Add-on…**.
 5. Select the extracted project's **`manifest.json`** file.
-6. Open the **Extensions** (puzzle-piece) menu, choose **ScrollSentinel**, adjust your settings, and click **Save settings**.
+6. Open the **Extensions** (puzzle-piece) menu, choose **ScrollSentinel**. Use the compact popup to check status or change a quick toggle, then choose **Advanced schedules & settings** to edit schedules and save changes.
 
 **Reminder:** Temporary add-ons are unloaded when you **restart Firefox**. To test again, repeat steps 3–5. In `about:debugging`, use **Reload** after you edit the extension's source files.
 
@@ -193,14 +209,14 @@ Strict Mode prevents changes **through this extension's interface** until the ch
 
 ### Option B — Permanent installation from Mozilla Add-ons (when published)
 
-**This option is not available for this project yet.** After the extension passes Mozilla's submission/review process and receives a **public listing**, users will be able to:
+**ScrollSentinel v2.5.3 is already publicly available** from [Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/). The newer v2.8.0 features are not included in that Store build until a new version is approved. To install the current public version:
 
 1. Open its official **addons.mozilla.org** listing.
 2. Click **Add to Firefox**.
 3. Review the permissions and click **Add**.
 4. Open the extension's toolbar popup and configure it.
 
-A listed, signed extension remains installed across Firefox restarts; approved updates are distributed through Mozilla Add-ons. **There is no official listing link for this project at present.**
+A listed, signed extension remains installed across Firefox restarts; approved updates are distributed through Mozilla Add-ons. **Official listing:** https://addons.mozilla.org/en-US/firefox/addon/scrollsentinel/.
 
 **Mozilla reference:** [Signing and distributing add-ons](https://extensionworkshop.com/documentation/publish/signing-and-distribution-overview/).
 
@@ -231,14 +247,15 @@ web-ext build
 
 ## ⚙️ Settings quick start
 
-1. Toggle **Enable blocking** on.
-2. Edit either built-in viewing schedule if needed, and optionally add up to two removable custom schedules. Check **2 or 3** schedules to activate them, and adjust any overlapping time ranges before saving.
-3. Choose the **daily minute limit** (default: 90).
-4. Enable **Distraction-Free YouTube** if you want to reduce recommendations, comments and suggested videos.
-5. For Strict Mode, choose **No lock**, **7 days**, or **14 days**.
-6. Click **Save settings**. A 7- or 14-day lock requires confirmation and then prevents editing settings inside the popup until it expires.
+1. Open the **ScrollSentinel** toolbar popup to see whether YouTube is allowed now, how much daily viewing time remains, and the next video-break countdown.
+2. Switch YouTube schedule protection or Distraction-Free mode on/off directly in the popup. **Quick toggles save automatically** and become read-only during Strict Mode.
+3. Click **Advanced schedules & settings** in the popup. Firefox opens the full Settings page in a normal browser tab.
+4. Keep/edit your original two schedule slots, optionally add up to two removable custom schedules and select **2 or 3** windows. Enter times using **24-hour HH:MM**. Resolve any overlapping time ranges (even disabled windows).
+5. Choose your daily YouTube browsing limit (default **90 minutes**).
+6. Optionally select Strict Mode for **7 or 14 days**. The full Settings page will require you to check an **inline acknowledgment** explaining the lock. Avoid activating Strict Mode until you've tested your schedule.
+7. Click **Save changes**. The extension validates all changes again in its background code and reports any problems.
 
-**Tip:** Test your schedule **without** Strict Mode first. Strict Mode cannot be reversed through the popup before expiry.
+The small popup intentionally does **not** contain oversized time inputs, a complete schedule form or a nested confirmation dialog.
 
 ## 📁 Project structure
 
@@ -252,17 +269,22 @@ scrollsentinel/
 ├── background.js    # Active schedule enforcement, video break accounting and Strict Mode
 ├── quest-stories.js # 11 illustrated story scenes; Networking lives in guard.js
 ├── guard.js         # YouTube overlay, 30-minute quests, 5-minute story replays
-├── popup.html       # Popup user interface
+├── popup.html       # Compact quick-status popup
+├── options.html     # Full-tab, responsive schedule and settings editor
 ├── icons/
 │   ├── scrollsentinel.svg # Original vector source
 │   └── scrollsentinel-{16,32,48,64,96,128}.png # Browser icons
-├── popup.js         # Popup behavior and settings management
+├── popup.js         # Quick toggle actions and Open Settings
+├── options.js       # Schedule editor, validation and Strict Mode consent
 ├── tests/
 │   ├── quest-stories.test.cjs # Dependency-free story and timing checks
 │   ├── schedule.test.cjs      # 4-slot editing, overlap and time-selection checks
-│   └── video-break.test.cjs   # Video budget, break phases and integration checks
+│   ├── video-break.test.cjs   # Video budget, break phases and integration checks
+│   ├── video-break-runtime.test.cjs # Browser-messaging integration tests
+│   └── ui.test.cjs            # Compact popup, options and Strict Mode UI tests
 ├── .github/workflows/
-│   └── quality.yml  # Automated GitHub Actions checks
+│   ├── quality.yml         # Automated JavaScript tests
+│   └── amo-package.yml    # Mozilla upload ZIP and lint
 ├── README.md        # Documentation
 ├── LICENSE          # MIT license
 └── .gitignore       # Ignored build artifacts
@@ -284,7 +306,7 @@ node --test tests/*.test.cjs
 
 ## 🔍 Known limitations & testing
 
-The currently public **Mozilla Add-ons release is v2.5.3**, but **v2.7.0 is still a GitHub development version**. JavaScript source checks and automated tests run using `node --test tests/*.test.cjs`; **full real-browser acceptance testing on the four supported websites has not been completed**. Before submitting a new Mozilla release, verify:
+The currently public **Mozilla Add-ons release is v2.5.3**, but **v2.8.0 is still a GitHub development version**. JavaScript source checks and automated tests run using `node --test tests/*.test.cjs`; **full real-browser acceptance testing on the four supported websites has not been completed**. Before submitting a new Mozilla release, verify:
 
 - Time transitions for default and custom schedules, including unchecked windows, boundaries touching without overlap, and overnight intervals.
 - Prevention of overlaps between any configured schedules (even unchecked ones), and preventing edits/deletes during Strict Mode.

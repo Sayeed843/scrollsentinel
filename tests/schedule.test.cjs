@@ -94,8 +94,14 @@ test("manifest and UI load the shared schedule script in the right order", () =>
   assert.deepEqual(manifest.content_scripts[0].js, ["schedule.js","quest-stories.js","guard.js"]);
   const popup = read("popup.html");
   assert.ok(popup.indexOf('src="schedule.js"') < popup.indexOf('src="popup.js"'));
-  assert.match(popup, /id="add-schedule"/);
-  assert.match(popup, /id="schedule-list"/);
+  // Popup stays compact; the full editor lives in a full browser tab.
+  assert.doesNotMatch(popup, /id="schedule-list"/);
+  assert.doesNotMatch(popup, /type="time"/);
+  const options = read("options.html");
+  assert.match(options, /id="add-schedule"/);
+  assert.match(options, /id="schedule-list"/);
+  assert.ok(options.indexOf('src="schedule.js"') < options.indexOf('src="options.js"'));
+  assert.deepEqual(manifest.options_ui, {page:"options.html",open_in_tab:true});
   const background = read("background.js");
   assert.match(background, /Schedule\.validateWindows\(msg\.windows\)/);
   assert.match(background, /s\.windows=Schedule\.normalizeWindows\(s\.windows\)/);
@@ -107,10 +113,13 @@ test("manifest and UI load the shared schedule script in the right order", () =>
 test("Strict Mode continues to guard all settings including schedules", () => {
   const code = read("background.js");
   assert.match(code, /if\(s\.lockUntil>Date\.now\(\)\)return \{ok:false/);
-  const popup = read("popup.js");
-  assert.match(popup, /el\(id\)\.disabled = locked \|\| working/);
-  assert.match(popup, /del\.disabled = locked \|\| working/);
-  assert.match(popup, /index < 2/); // first two slots never offer delete
-  assert.match(popup, /windows\.splice\(index, 1\)/); // only custom delete
-  assert.match(popup, /selectionCount\(\) <= 2/);
+  const options = read("options.js");
+  assert.match(options, /el\(id\)\.disabled = locked \|\| saving/);
+  assert.match(options, /remove\.disabled = locked \|\| saving/);
+  assert.match(options, /index < 2/); // first two slots never offer delete
+  assert.match(options, /windows\.splice\(index,1\)/); // only custom delete
+  assert.match(options, /activeCount\(\) <= 2/);
+  assert.match(read("options.html"), /id="lock-consent"/);
+  assert.doesNotMatch(options, /\bconfirm\s*\(/);
+  assert.match(read("popup.js"), /if \(latest\.locked\) throw new Error/);
 });
